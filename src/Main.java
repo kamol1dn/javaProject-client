@@ -14,6 +14,9 @@ public class Main {
 
         // Loop for Login or Register
         while (!loggedIn) {
+            ScreenUtils.clearScreen();
+            ScreenUtils.printHeader("Welcome to Student Companion App", ScreenUtils.CYAN);
+
             ScreenUtils.printMessage("Main Menu:", ScreenUtils.YELLOW, true);
             ScreenUtils.printMessage("1. Login", ScreenUtils.GREEN, false);
             ScreenUtils.printMessage("2. Register", ScreenUtils.BLUE, false);
@@ -25,12 +28,15 @@ public class Main {
 
             switch (choice) {
                 case 1 -> {
-                    // Login process
+                    ScreenUtils.clearScreen();
                     if (handleLogin(scanner)) {
                         loggedIn = true;
                     }
                 }
-                case 2 -> handleRegister(scanner);
+                case 2 -> {
+                    ScreenUtils.clearScreen();
+                    handleRegister(scanner);
+                }
                 case 3 -> {
                     ScreenUtils.printMessage("Thank you for using the app! Goodbye!", ScreenUtils.CYAN, true);
                     System.exit(0);
@@ -39,13 +45,13 @@ public class Main {
             }
         }
 
-        // Clear screen before showing the main menu
+
         ScreenUtils.clearScreen();
 
-        // Show the main menu
+
         MainMenu.show();
 
-        // Exit the program with a goodbye message
+
         ScreenUtils.clearScreen();
         ScreenUtils.printHeader("Thank you for using the app!", ScreenUtils.GREEN);
     }
@@ -64,10 +70,13 @@ public class Main {
         String response = ClientConnection.sendRequest("LOGIN|" + userId + "|" + password);
 
         if ("LOGIN|true".equals(response)) {
+
             ScreenUtils.printMessage("\nLogin successful! Welcome back, " + userId + "!", ScreenUtils.GREEN, true);
+            ScreenUtils.showLoading("\nLoading...", 6);
             return true;
         } else {
             ScreenUtils.printMessage("\nLogin failed. Please check your credentials and try again.", ScreenUtils.RED, false);
+            ScreenUtils.showLoading("\nGoing back", 6);
             return false;
         }
     }
@@ -86,12 +95,14 @@ public class Main {
         String name = scanner.nextLine();
 
 
-        String response = ClientConnection.sendRequest("REGISTER |" + userId + "|" + password + "|" + name);
+        String response = ClientConnection.sendRequest("REGISTER|" + userId + "|" + password + "|" + name);
 
         if ("REGISTER|true".equals(response)) {
             ScreenUtils.printMessage("\nRegistration successful! You can now log in.", ScreenUtils.GREEN, true);
+            ScreenUtils.showLoading("\nGoing back..", 15);
         } else {
             ScreenUtils.printMessage("\nRegistration failed. The user ID may already exist.", ScreenUtils.RED, false);
+            ScreenUtils.showLoading("\nGoing back..", 7);
         }
     }
 }

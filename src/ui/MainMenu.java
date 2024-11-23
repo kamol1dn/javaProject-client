@@ -13,12 +13,13 @@ public class MainMenu {
         Scanner scanner = new Scanner(System.in);
         while (true) {
             ScreenUtils.clearScreen();
-            ScreenUtils.printHeader("Main Menu" "Yellow");
-            System.out.println("1. Tasks");
-            System.out.println("2. Library Manager");
-            System.out.println("3. Student Details & Timetable");
-            System.out.println("4. Settings");
-            System.out.println("0. Exit");
+            ScreenUtils.printHeader("Main Menu", "YELLOW");
+            ScreenUtils.printMessage("1. Tasks", "GREEN", false);
+            ScreenUtils.printMessage("2. Library Manager", "BLUE", false);
+            ScreenUtils.printMessage("3. Student Details & Timetable", "CYAN", false);
+            ScreenUtils.printMessage("4. Settings", "PURPLE", false);
+            ScreenUtils.printMessage("5. Exit", "RED", false);
+
             ScreenUtils.printDivider();
 
             int choice = InputUtils.getIntInRange("Enter your choice: ", 0, 4);
@@ -30,12 +31,11 @@ public class MainMenu {
                 case 4 -> SettingsMenu.show();
                 case 0 -> {
                     System.out.println("Exiting...");
-                    return; // Exit the main menu loop
+                    return;
                 }
                 default -> System.out.println("Invalid choice. Please try again.");
             }
-
-            ScreenUtils.promptEnterKey(); // Wait for the user to press Enter before returning
+            ScreenUtils.promptEnterKey();
         }
     }
 }
