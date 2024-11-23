@@ -7,8 +7,9 @@ public class TasksMenu {
     public static void show() {
         while (true) {
             ScreenUtils.clearScreen();
-            ScreenUtils.printHeader("Tasks Menu");
-            System.out.println("1. View Tasks");
+            ScreenUtils.printHeader("Tasks Menu", ScreenUtils.BLUE);
+            ScreenUtils.printMessage("1. View Tasks", ScreenUtils.YELLOW, false);
+            System.out.println();
             System.out.println("2. Create a Task");
             System.out.println("3. Edit a Task");
             System.out.println("4. Delete All Tasks");
