@@ -2,6 +2,7 @@ import ui.MainMenu;
 import utils.ScreenUtils;
 import network.ClientConnection;
 import java.util.Scanner;
+import utils.Session;
 
 public class Main {
     public static void main(String[] args) {
@@ -31,6 +32,8 @@ public class Main {
                     ScreenUtils.clearScreen();
                     if (handleLogin(scanner)) {
                         loggedIn = true;
+
+
                     }
                 }
                 case 2 -> {
@@ -70,6 +73,8 @@ public class Main {
         String response = ClientConnection.sendRequest("LOGIN|" + userId + "|" + password);
 
         if ("LOGIN|true".equals(response)) {
+            Session.getInstance().setUserId(userId);
+
 
             ScreenUtils.printMessage("\nLogin successful! Welcome back, " + userId + "!", ScreenUtils.GREEN, true);
             ScreenUtils.showLoading("\nLoading...", 6);

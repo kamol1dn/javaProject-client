@@ -27,7 +27,8 @@ public class ClientConnection {
         MOCK_BOOK_USER.add(new String[]{"student2", "Dune"});
 
         // Tasks
-        MOCK_TASKLIST.add(new String[]{"student1", "Complete Assignment", "2024-12-01"});
+        MOCK_TASKLIST.add(new String[]{"U1", "Complete Assignment", "2024-12-01"});
+        MOCK_TASKLIST.add(new String[]{"U1", "Dune", "2025-23-54"});
         MOCK_TASKLIST.add(new String[]{"student1", "Prepare for Exam", "2024-12-10"});
         MOCK_TASKLIST.add(new String[]{"student2", "Finish Project", "2024-11-30"});
 
@@ -54,7 +55,7 @@ public class ClientConnection {
                 return handleLogin(parts);
             case "REGISTER":
                 return handleRegister(parts);
-            case "TASKALL":
+            case "TASKLIST":
                 return handleTaskList(parts);
             case "TASKEDITNAME":
                 return handleTaskNameEdit(parts);

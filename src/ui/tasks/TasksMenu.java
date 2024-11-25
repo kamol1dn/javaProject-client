@@ -3,17 +3,20 @@ package ui.tasks;
 import utils.ScreenUtils;
 import utils.InputUtils;
 
+import static utils.ScreenUtils.printHeader;
+import static utils.ScreenUtils.printMessage;
+
 public class TasksMenu {
     public static void show() {
         while (true) {
             ScreenUtils.clearScreen();
-            ScreenUtils.printHeader("Tasks Menu", ScreenUtils.BLUE);
-            ScreenUtils.printMessage("1. View Tasks", ScreenUtils.YELLOW, false);
+            printHeader("Tasks Menu", "\u001B[32m");
+            printMessage("1. View Tasks", ScreenUtils.YELLOW, false);
             System.out.println();
-            System.out.println("2. Create a Task");
-            System.out.println("3. Edit a Task");
-            System.out.println("4. Delete All Tasks");
-            System.out.println("0. Go Back");
+            printMessage("2. Create a Task", ScreenUtils.CYAN, false);
+            printMessage("3. Edit a Task", ScreenUtils.BLUE, false);
+            printMessage("4. Delete a Task", ScreenUtils.RED, false);
+            printMessage("0. Go back", ScreenUtils.WHITE, false);
             ScreenUtils.printDivider();
 
             int choice = InputUtils.getIntInRange("Enter your choice: ", 0, 4);
