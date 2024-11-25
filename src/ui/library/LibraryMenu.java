@@ -3,16 +3,20 @@ package ui.library;
 import utils.ScreenUtils;
 import utils.InputUtils;
 
+import static utils.ScreenUtils.printHeader;
+import static utils.ScreenUtils.printMessage;
+
 public class LibraryMenu {
     public static void show() {
         while (true) {
             ScreenUtils.clearScreen();
-            ScreenUtils.printHeader("Library Menu");
-            System.out.println("1. View Book List");
-            System.out.println("2. Borrow a Book");
-            System.out.println("3. Return a Book");
-            System.out.println("4. Add a Book (Admin)");
-            System.out.println("0. Go Back");
+            printHeader("Library Menu", ScreenUtils.BLUE);
+
+            printMessage("1. View Book List", ScreenUtils.CYAN, false);
+            printMessage("2. Borrow a Book", ScreenUtils.GREEN, false);
+            printMessage("3. Return a Book", ScreenUtils.PURPLE, false);
+            printMessage("4. Add a Book (for admins only)",ScreenUtils.RED, false );
+            printMessage("0. Go Back");
             ScreenUtils.printDivider();
 
             int choice = InputUtils.getIntInRange("Enter your choice: ", 0, 4);
@@ -22,10 +26,8 @@ public class LibraryMenu {
                 case 2 -> BookBorrowUI.show();
                 case 3 -> BookReturnUI.show();
                 case 4 -> BookAddUI.show();
-                case 0 -> {
-                    return; // Exit the Library Menu
-                }
-                default -> System.out.println("Invalid choice. Try again.");
+                case 0 ->  {return;}
+                default -> printMessage("Invalid choice. Try again.", ScreenUtils.RED, false);
             }
 
             ScreenUtils.promptEnterKey(); // Pause before going back to the menu

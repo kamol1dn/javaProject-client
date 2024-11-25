@@ -1,8 +1,25 @@
 package network;
-
 import java.util.*;
+import java.io.*;
+import java.net.Socket;
+
 
 public class ClientConnection {
+
+    private static final String SERVER_HOST = "192.168.194.246"; // Replace with your Serveo public URL
+    private static final int SERVER_PORT = 8080; // Serveo forwards traffic over port 80
+
+    private static final int testVar = 0;
+    public static String sendRequest(String request) {
+        if (testVar == 0) {
+            // Use mock database
+            return handleMockRequest(request);
+        } else {
+            // Use actual server connection
+            return handleServerRequest(request);
+        }
+    }
+
     // Mock tables
     private static final Map<String, String[]> MOCK_USER_DB = new HashMap<>(); // user_id -> {password, name}
     private static final List<String[]> MOCK_BOOKLIST = new ArrayList<>(); // {title, author}
@@ -27,10 +44,10 @@ public class ClientConnection {
         MOCK_BOOK_USER.add(new String[]{"student2", "Dune"});
 
         // Tasks
-        MOCK_TASKLIST.add(new String[]{"U1", "Complete Assignment", "2024-12-01"});
-        MOCK_TASKLIST.add(new String[]{"U1", "Dune", "2025-23-54"});
-        MOCK_TASKLIST.add(new String[]{"student1", "Prepare for Exam", "2024-12-10"});
-        MOCK_TASKLIST.add(new String[]{"student2", "Finish Project", "2024-11-30"});
+        MOCK_TASKLIST.add(new String[]{"U1", "Complete Assignment", "22.23.2311"});
+        MOCK_TASKLIST.add(new String[]{"U1", "Dune", "22.23.2311"});
+        MOCK_TASKLIST.add(new String[]{"student1", "Prepare for Exam", "22.23.2311"});
+        MOCK_TASKLIST.add(new String[]{"student2", "Finish Project", "22.23.2311"});
 
         // Timetable
         MOCK_TIMETABLE.put("student1", new String[]{"Math", "Physics", "Chemistry", "Biology"});
@@ -43,7 +60,19 @@ public class ClientConnection {
      * @param request The request command to be sent to the server.
      * @return The mocked response in the format COMMAND|true or COMMAND|false.
      */
-    public static String sendRequest(String request) {
+    public static String handleServerRequest(String request) {
+        try (Socket socket = new Socket(SERVER_HOST, SERVER_PORT);
+             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
+
+            out.println(request); // Send the request to the server
+            return in.readLine(); // Read the server's response
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "ERROR|Unable to connect to server";
+        }
+    }
+    public static String handleMockRequest(String request) {
         System.out.println("Mock request sent: " + request);
 
         // Split the request into parts based on the '|' delimiter
@@ -57,17 +86,15 @@ public class ClientConnection {
                 return handleRegister(parts);
             case "TASKLIST":
                 return handleTaskList(parts);
-            case "TASKEDITNAME":
-                return handleTaskNameEdit(parts);
-            case "TASKEDITDEADLINE":
-                return handleTaskEditDeadline(parts);
+            case "TASKEDIT":
+                return handleTaskEdit(parts);
             case "TASKALLDELETE":
                 return handleTaskDeleteAll(parts);
-            case "TASKADDNEW":
+            case "TASKSADDNEW":
                 return handleTaskAddNew(parts);
             case "ADDNEWBOOK":
                 return handleAddBook(parts);
-            case "ASSIGNBOOk":
+            case "ASSIGNBOOK":
                 return handleAssignBook(parts);
             case "RETURNBOOK":
                 return handleReturnBook(parts);
@@ -130,33 +157,44 @@ public class ClientConnection {
         }
     }
 
-    private static String handleTaskNameEdit(String[] parts) {
-        if (parts.length != 3) {
-            return "TASKEDITNAME|false";
+
+    private static String handleTaskEdit(String[] parts) {
+        if (parts.length != 4) {
+            return "TASKEDIT|false"; // Invalid format
         }
-        String oldName = parts[1];
-        String newName = parts[2];
-        if (MOCK_TASKLIST.contains(oldName)) {
-            return "TASKEDITNAME|false";
-        } else if(oldName.equals(newName)){
-            return "TASKEDITNAME|false";
-        } else {
-            return "TASKEDITNAME|true";
+
+        String oldTaskName = parts[1]; // The existing task name to edit
+        String newTaskName = parts[2]; // The new task description
+        String newDeadline = parts[3]; // The new deadline
+
+        // Locate the task in the list
+        boolean taskFound = false;
+        for (String[] task : MOCK_TASKLIST) {
+            String studentId = task[0];
+            String currentTaskName = task[1];
+            String currentDeadline = task[2];
+
+            // Check if this is the task to edit
+            if (currentTaskName.equals(oldTaskName)) {
+                // Validation checks
+                if (currentTaskName.equals(newTaskName) && currentDeadline.equals(newDeadline)) {
+                    return "TASKEDIT|false"; // No changes made
+                }
+
+                // Update task name and deadline
+                task[1] = newTaskName;
+                task[2] = newDeadline;
+
+                taskFound = true;
+                break; // Task found and updated, exit loop
+            }
         }
+
+        // If task was not found, return failure
+        return taskFound ? "TASKEDIT|true" : "TASKEDIT|false";
     }
 
-    private static String handleTaskEditDeadline(String[] parts) {
-        if (parts.length != 3) {
-            return "TASKEDITNAME|false";
-        }
-        String name = parts[1];
-        String deadline = parts[2];
-        if (!MOCK_TASKLIST.contains(name)) {
-            return "TASKEDITNAME|false";
-        } else{
-            return "TASKEDITNAME|true";
-        }
-    }
+
 
     private static String handleTaskDeleteAll(String[] parts) {
         if (parts.length != 2) { // TASKALLDELETE requires 2 parts: command and user_id

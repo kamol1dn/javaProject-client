@@ -33,8 +33,6 @@ public class Main {
                     ScreenUtils.clearScreen();
                     if (handleLogin(scanner)) {
                         loggedIn = true;
-
-
                     }
                 }
                 case 2 -> {

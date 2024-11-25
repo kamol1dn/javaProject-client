@@ -12,20 +12,20 @@ public class TasksMenu {
             ScreenUtils.clearScreen();
             printHeader("Tasks Menu", "\u001B[32m");
             printMessage("1. View Tasks", ScreenUtils.YELLOW, false);
-            System.out.println();
+
             printMessage("2. Create a Task", ScreenUtils.CYAN, false);
-            printMessage("3. Edit a Task", ScreenUtils.BLUE, false);
-            printMessage("4. Delete a Task", ScreenUtils.RED, false);
+
+            printMessage("3. Delete all tasks", ScreenUtils.RED, true);
             printMessage("0. Go back", ScreenUtils.WHITE, false);
             ScreenUtils.printDivider();
 
-            int choice = InputUtils.getIntInRange("Enter your choice: ", 0, 4);
+            int choice = InputUtils.getIntInRange("Enter your choice: ", 0, 3);
 
             switch (choice) {
                 case 1 -> TaskListUI.show();
                 case 2 -> TaskCreateUI.show();
-                case 3 -> TaskEditUI.show();
-                case 4 -> TaskDeleteUI.show();
+
+                case 3 -> TaskDeleteUI.show();
                 case 0 -> {
                     return; // Exit the Tasks Menu
                 }

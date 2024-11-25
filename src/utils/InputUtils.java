@@ -5,12 +5,7 @@ import java.util.Scanner;
 public class InputUtils {
     private static final Scanner scanner = new Scanner(System.in);
 
-    /**
-     * Prompts the user for a string input and ensures it is non-empty.
-     *
-     * @param prompt The message displayed to the user.
-     * @return A non-empty string input from the user.
-     */
+
     public static String getNonEmptyString(String prompt) {
         String input;
         do {
@@ -23,14 +18,7 @@ public class InputUtils {
         return input;
     }
 
-    /**
-     * Prompts the user for an integer input and validates it is within a specified range.
-     *
-     * @param prompt The message displayed to the user.
-     * @param min    The minimum valid value.
-     * @param max    The maximum valid value.
-     * @return A valid integer input from the user.
-     */
+
     public static int getIntInRange(String prompt, int min, int max) {
         int input;
         while (true) {
@@ -48,12 +36,18 @@ public class InputUtils {
         }
     }
 
-    /**
-     * Prompts the user for a date input in the format `dd.mm.yyyy` and validates the format.
-     *
-     * @param prompt The message displayed to the user.
-     * @return A valid date string in `dd.mm.yyyy` format.
-     */
+    public static int getInt() {
+        while (true) {
+            System.out.print("Enter a number: ");
+            try {
+                return Integer.parseInt(scanner.nextLine().trim()); // Parse and return the integer
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input. Please enter a valid number.");
+            }
+        }
+    }
+
+
     public static String getDate(String prompt) {
         String input;
         while (true) {
