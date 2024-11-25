@@ -3,6 +3,7 @@ import utils.ScreenUtils;
 import network.ClientConnection;
 import java.util.Scanner;
 import utils.Session;
+import models.User;
 
 public class Main {
     public static void main(String[] args) {
@@ -72,11 +73,17 @@ public class Main {
 
         String response = ClientConnection.sendRequest("LOGIN|" + userId + "|" + password);
 
-        if ("LOGIN|true".equals(response)) {
+        if (response.startsWith("LOGIN|true")) {
+
             Session.getInstance().setUserId(userId);
+            String[] answer = response.split("\\|");
+            String User_name = answer[2];
+            models.User.getInstance().setName(User_name);
+            models.User.getInstance().setPassword(password);
+            models.User.getInstance().setUserId(userId);
 
 
-            ScreenUtils.printMessage("\nLogin successful! Welcome back, " + userId + "!", ScreenUtils.GREEN, true);
+            ScreenUtils.printMessage("\nLogin successful! Welcome back, " + User_name  + "!", ScreenUtils.GREEN, true);
             ScreenUtils.showLoading("\nLoading...", 6);
             return true;
         } else {

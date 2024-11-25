@@ -111,7 +111,7 @@ public class ScreenUtils {
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
-        System.out.print(".");
+        System.out.print(" *");
     }
     System.out.println();
 }}

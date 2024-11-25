@@ -1,5 +1,7 @@
 package models;
 
+import utils.Session;
+
 import java.util.List;
 import java.util.ArrayList;
 
@@ -7,15 +9,15 @@ public class User {
     private String userId;
     private String password;
     private String name;
-
-
+    private static User instance;
+    public static User getInstance() {
+        if (instance == null) {
+            instance = new User();
+        }
+        return instance;
+    }
 
     // Constructor
-    public User(String userId, String password, String name) {
-        this.userId = userId;
-        this.password = password;
-        this.name = name;
-    }
 
     //getter id
     public String getUserId() {return userId;}

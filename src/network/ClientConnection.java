@@ -104,11 +104,14 @@ public class ClientConnection {
 
         // Check credentials
         if (MOCK_USER_DB.containsKey(userId) && MOCK_USER_DB.get(userId)[0].equals(password)) {
-            return "LOGIN|true";
+            // Retrieve the user's name
+            String userName = MOCK_USER_DB.get(userId)[1];
+            return "LOGIN|true|" + userName;
         } else {
             return "LOGIN|false";
         }
     }
+
 
     private static String handleRegister(String[] parts) {
         if (parts.length != 4) {
