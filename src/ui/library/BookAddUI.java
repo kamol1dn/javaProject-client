@@ -4,20 +4,27 @@ import utils.InputUtils;
 import utils.ScreenUtils;
 import network.ClientConnection;
 
-
 public class BookAddUI {
     public static void show() {
         ScreenUtils.clearScreen();
-        ScreenUtils.printHeader("Add a New Book");
+        ScreenUtils.printHeader("Add a New Book", ScreenUtils.CYAN);
 
-        String bookName = InputUtils.getNonEmptyString("Enter the name of the new book: ");
-        String bookAuthor = InputUtils.getNonEmptyString("Enter the author of the book: ");
+        // Get input for book name and author
+        String bookName = InputUtils.getNonEmptyString(ScreenUtils.BLUE+"Enter the name of the new book: " + ScreenUtils.RESET);
+        String bookAuthor = InputUtils.getNonEmptyString(ScreenUtils.BLUE+"Enter the author of the new book: " + ScreenUtils.RESET);
 
-        String request = "LIBRARY_ADD " + bookName + " " + bookAuthor; // Command to add a book
+        // Format the request for adding a new book
+        String request = "ADDNEWBOOK|true|" + bookName + "|" + bookAuthor;
         String response = ClientConnection.sendRequest(request);
 
-        System.out.println("Server Response: " + response); // Response indicates success or failure
+        // Parse the server response
+        if ("ADDNEWBOOK|true".equals(response)) {
+            ScreenUtils.printMessage("The book \"" + bookName + "\" by " + bookAuthor + " has been added successfully.", ScreenUtils.GREEN, true);
+        } else {
+            ScreenUtils.printMessage("Failed to add the book. Please try again.", ScreenUtils.RED, true);
+        }
 
-        ScreenUtils.promptEnterKey(); // Wait for the user to press Enter
+        // Prompt the user to press Enter to continue
+        ScreenUtils.promptEnterKey();
     }
 }

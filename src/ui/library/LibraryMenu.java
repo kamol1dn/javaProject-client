@@ -14,18 +14,17 @@ public class LibraryMenu {
 
             printMessage("1. View Book List", ScreenUtils.CYAN, false);
             printMessage("2. Borrow a Book", ScreenUtils.GREEN, false);
-            printMessage("3. Return a Book", ScreenUtils.PURPLE, false);
-            printMessage("4. Add a Book (for admins only)",ScreenUtils.RED, false );
+
+            printMessage("3. Add a Book (for admins only)",ScreenUtils.RED, false );
             printMessage("0. Go Back");
             ScreenUtils.printDivider();
 
             int choice = InputUtils.getIntInRange("Enter your choice: ", 0, 4);
 
             switch (choice) {
-                case 1 -> BookListUI.show();
-                case 2 -> BookBorrowUI.show();
-                case 3 -> BookReturnUI.show();
-                case 4 -> BookAddUI.show();
+                case 1 -> UserBookListUI.show();
+                case 2 -> BookBorrowFromListUI.show();
+                case 3 -> BookAddUI.show();
                 case 0 ->  {return;}
                 default -> printMessage("Invalid choice. Try again.", ScreenUtils.RED, false);
             }

@@ -1,7 +1,7 @@
 import ui.MainMenu;
 import utils.ScreenUtils;
 import network.ClientConnection;
-import java.util.Scanner;
+import java.util.Scanner;~
 import utils.Session;
 import models.User;
 
@@ -18,7 +18,6 @@ public class Main {
         while (!loggedIn) {
             ScreenUtils.clearScreen();
             ScreenUtils.printHeader("Welcome to Student Companion App", ScreenUtils.CYAN);
-
             ScreenUtils.printMessage("Main Menu:", ScreenUtils.YELLOW, true);
             ScreenUtils.printMessage("1. Login", ScreenUtils.GREEN, false);
             ScreenUtils.printMessage("2. Register", ScreenUtils.BLUE, false);

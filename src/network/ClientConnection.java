@@ -54,12 +54,7 @@ public class ClientConnection {
         MOCK_TIMETABLE.put("student2", new String[]{"History", "Economics", "Programming", "Art"});
     }
 
-    /**
-     * Simulates server communication.
-     *
-     * @param request The request command to be sent to the server.
-     * @return The mocked response in the format COMMAND|true or COMMAND|false.
-     */
+
     public static String handleServerRequest(String request) {
         try (Socket socket = new Socket(SERVER_HOST, SERVER_PORT);
              PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
@@ -96,12 +91,14 @@ public class ClientConnection {
                 return handleAddBook(parts);
             case "ASSIGNBOOK":
                 return handleAssignBook(parts);
-            case "RETURNBOOK":
+            case "BOOKRETURN":
                 return handleReturnBook(parts);
             case "STUDENTDETAIL":
                 return handleDetailStudent(parts);
-            case "VIEWALLBOOKS":
-                return handleBookList(parts);
+            case "VIEWALLBOOKS": // view all books
+                return handleViewAllBooks(parts);
+            case "USERBOOKS": //viev user's all books
+                return handleUserBooks(parts);
             case "TIMETABLEEDIT":
                 return handleTimetableEdit(parts);
             case "VIEWTIMETABLE":
@@ -115,7 +112,6 @@ public class ClientConnection {
                 return command + "|false"; // Unknown command
         }
     }
-
 
 
 
@@ -194,6 +190,41 @@ public class ClientConnection {
         return taskFound ? "TASKEDIT|true" : "TASKEDIT|false";
     }
 
+    private static String handleUserBooks(String[] parts) {
+        if (parts.length != 2) { // Validate input: USERBOOKS|userid
+            return "USERBOOKS|false"; // Invalid format
+        }
+
+        String userId = parts[1]; // Extract the user ID from the request
+        StringBuilder response = new StringBuilder("USERBOOKS|true|"); // Start building the response
+
+        boolean hasBooks = false;
+
+        // Iterate through the book-user mapping to find books for the given user ID
+        for (String[] entry : MOCK_BOOK_USER) {
+            if (entry[0].equals(userId)) {
+                hasBooks = true;
+                String bookName = entry[1];
+
+                // Find the author for the book in the book list
+                for (String[] book : MOCK_BOOKLIST) {
+                    if (book[0].equals(bookName)) {
+                        response.append(bookName).append(",").append(book[1]).append("|");
+                        break;
+                    }
+                }
+            }
+        }
+
+        // If no books are found, return an appropriate response
+        if (!hasBooks) {
+            return "USERBOOKS|false";
+        }
+
+        // Remove the trailing delimiter and return the response
+        return response.substring(0, response.length() - 1); // Remove the last "|"
+    }
+
 
 
     private static String handleTaskDeleteAll(String[] parts) {
@@ -240,12 +271,12 @@ public class ClientConnection {
     }
 
     private static String handleAddBook(String[] parts) {
-        if (parts.length != 3) { // ADDNEWBOOK requires 3 parts: command, bookname, author
+        if (parts.length != 4) { // ADDNEWBOOK requires 3 parts: command, bookname, author
             return "ADDNEWBOOK|false"; // Invalid format
         }
 
-        String bookName = parts[1];
-        String author = parts[2];
+        String bookName = parts[2];
+        String author = parts[3];
 
         // Check if the book already exists
         for (String[] book : MOCK_BOOKLIST) {
@@ -259,41 +290,64 @@ public class ClientConnection {
         return "ADDNEWBOOK|true"; // Success
     }
 
-    private static String handleBookList(String[] parts) {
-        if (parts.length != 1) {
-            return "BOOKLIST|false";
+    private static String handleViewAllBooks(String[] parts) {
+        if (parts.length != 2) { // VIEWALLBOOKS requires 1 part: command
+            return "VIEWALLBOOKS|false"; // Invalid format
         }
 
-        StringBuilder response = new StringBuilder("BOOKLIST");
+        StringBuilder response = new StringBuilder("VIEWALLBOOKS|true");
         for (String[] book : MOCK_BOOKLIST) {
-            response.append("|").append(book[0]).append(",").append(book[1]);
+            response.append("|").append(book[0]).append(",").append(book[1]); // Format: title,author
         }
-        return response.toString();
+        return response.toString(); // Returns list of all books
     }
+
 
     private static String handleAssignBook(String[] parts) {
         if (parts.length != 3) {
-            return "ASSIGN_BOOK|false"; // Invalid format
+            return "ASSIGNBOOK|false"; // Invalid format
         }
 
         String userId = parts[1];
         String bookName = parts[2];
 
+        // Check if the book is already assigned to the user
+        for (String[] entry : MOCK_BOOK_USER) {
+            if (entry[0].equals(userId) && entry[1].equals(bookName)) {
+                return "ASSIGNBOOK|false"; // User already borrowed the book
+            }
+        }
+
+        // Assign the book to the user
         MOCK_BOOK_USER.add(new String[]{userId, bookName});
-        return "ASSIGN_BOOK|true";
+        return "ASSIGNBOOK|true"; // Success
     }
+
 
     private static String handleReturnBook(String[] parts) {
         if (parts.length != 3) {
-            return "RETURN_BOOK|false"; // Invalid format
+            return "BOOKRETURN|false"; // Invalid format
         }
-
         String userId = parts[1];
         String bookName = parts[2];
 
-        MOCK_BOOK_USER.removeIf(entry -> entry[0].equals(userId) && entry[1].equals(bookName));
-        return "RETURN_BOOK|true";
+        boolean bookFound = false;
+
+        // Iterate through the book-user mapping to find the matching user and book
+        Iterator<String[]> iterator = MOCK_BOOK_USER.iterator();
+        while (iterator.hasNext()) {
+            String[] entry = iterator.next();
+            if (entry[0].equals(userId) && entry[1].equals(bookName)) {
+                iterator.remove(); // Remove the book from the user's assigned books
+                bookFound = true;
+                break; // Exit loop after finding and removing the book
+            }
+        }
+
+        // Return success if the book was found and removed, otherwise return failure
+        return bookFound ? "BOOKRETURN|true" : "BOOKRETURN|false";
     }
+
 
     private static String handleDetailStudent(String[] parts) {
         if (parts.length != 2) { // STUDENTDETAIL requires 2 parts: command and userid
