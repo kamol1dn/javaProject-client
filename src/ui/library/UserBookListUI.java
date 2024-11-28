@@ -28,7 +28,7 @@ public class UserBookListUI {
 
                     // Print the table header
                     ScreenUtils.printMessage("=================================================", ScreenUtils.CYAN, true);
-                    ScreenUtils.printMessage("|   #   |           Book Title          |   Author       |", ScreenUtils.CYAN, true);
+                    ScreenUtils.printMessage("|   #   |           Book Title      |   Author     |", ScreenUtils.CYAN, true);
                     ScreenUtils.printMessage("-------------------------------------------------", ScreenUtils.CYAN, true);
 
                     // Loop through the books and display them in a table format
@@ -82,7 +82,7 @@ public class UserBookListUI {
                             ScreenUtils.printMessage("Book returned successfully: " + bookName, ScreenUtils.GREEN, true);
                         } else if (returnResponse == "BOOKRETURN|false"){
                             ScreenUtils.printMessage("Failed: " + bookName, ScreenUtils.GREEN, false);
-                        }
+                        } else
                         {
                             ScreenUtils.printMessage("Failed to return the book: " + bookName, ScreenUtils.RED, true);
                         }

@@ -1,7 +1,8 @@
 import ui.MainMenu;
+import utils.InputUtils;
 import utils.ScreenUtils;
 import network.ClientConnection;
-import java.util.Scanner;~
+import java.util.Scanner;
 import utils.Session;
 import models.User;
 
@@ -24,7 +25,7 @@ public class Main {
             ScreenUtils.printMessage("3. Exit", ScreenUtils.RED, false);
 
             System.out.print(ScreenUtils.PURPLE + "Choose an option: " + ScreenUtils.RESET);
-            int choice = scanner.nextInt();
+            int choice= InputUtils.getIntInRange("", 1, 3);
             scanner.nextLine(); // Consume newline
 
             switch (choice) {

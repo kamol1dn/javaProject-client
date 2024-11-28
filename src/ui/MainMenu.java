@@ -18,7 +18,7 @@ public class MainMenu {
             ScreenUtils.printMessage("2. Library Manager", ScreenUtils.BLUE, false);
             ScreenUtils.printMessage("3. Student Details & Timetable", ScreenUtils.CYAN, false);
             ScreenUtils.printMessage("4. Settings", ScreenUtils.PURPLE, false);
-            ScreenUtils.printMessage("5. Exit", ScreenUtils.RED, false);
+            ScreenUtils.printMessage("0. Exit", ScreenUtils.RED, false);
 
             ScreenUtils.printDivider();
 
