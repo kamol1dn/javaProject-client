@@ -27,12 +27,11 @@ public class TasksMenu {
 
                 case 3 -> TaskDeleteUI.show();
                 case 0 -> {
-                    return; // Exit the Tasks Menu
+                    return;
                 }
                 default -> System.out.println("Invalid choice. Try again.");
             }
 
-            ScreenUtils.promptEnterKey(); // Pause before going back to the menu
         }
     }
 }

@@ -18,6 +18,5 @@ public class TaskCreateUI {
 
         System.out.println("Server Response : " + response); // Response indicates success or failure
 
-        ScreenUtils.promptEnterKey(); // Wait for the user to press Enter
     }
 }

@@ -24,7 +24,6 @@ public class BookAddUI {
             ScreenUtils.printMessage("Failed to add the book. Please try again.", ScreenUtils.RED, true);
         }
 
-        // Prompt the user to press Enter to continue
-        ScreenUtils.promptEnterKey();
+
     }
 }

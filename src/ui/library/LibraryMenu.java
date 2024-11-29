@@ -29,7 +29,7 @@ public class LibraryMenu {
                 default -> printMessage("Invalid choice. Try again.", ScreenUtils.RED, false);
             }
 
-            ScreenUtils.promptEnterKey(); // Pause before going back to the menu
+
         }
     }
 }
