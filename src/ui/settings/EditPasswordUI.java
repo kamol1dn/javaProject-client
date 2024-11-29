@@ -11,11 +11,18 @@ public class EditPasswordUI {
 
         String newPassword = InputUtils.getNonEmptyString("Enter your new password: ");
 
-        String request = "SETTINGS_EDIT_PASSWORD " + newPassword; // Command to update the password
+        String request = "USEREDITPASSWORD|" +models.User.getInstance().getUserId()+
+                "|"+ newPassword;
         String response = ClientConnection.sendRequest(request);
 
-        System.out.println("Server Response: " + response); // Response indicates success or failure
+        if (response.startsWith("USEREDITPASSWORD|true")) {
+        ScreenUtils.printMessage("Successfully edited password!", ScreenUtils.GREEN, true);
+        } else {
+        ScreenUtils.printMessage("Failed to edit password!", ScreenUtils.RED, false);
+        }
 
-        ScreenUtils.promptEnterKey(); // Wait for the user to press Enter
+        System.out.println(" test Server Response: " + response);
+
+        ScreenUtils.promptEnterKey();
     }
 }

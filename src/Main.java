@@ -26,7 +26,7 @@ public class Main {
 
             System.out.print(ScreenUtils.PURPLE + "Choose an option: " + ScreenUtils.RESET);
             int choice= InputUtils.getIntInRange("", 1, 3);
-            scanner.nextLine(); // Consume newline
+
 
             switch (choice) {
                 case 1 -> {
@@ -82,11 +82,11 @@ public class Main {
 
 
             ScreenUtils.printMessage("\nLogin successful! Welcome back, " + User_name  + "!", ScreenUtils.GREEN, true);
-            ScreenUtils.showLoading("\nLoading...", 6);
+            ScreenUtils.showLoading("\nLoading...", 3);
             return true;
         } else {
             ScreenUtils.printMessage("\nLogin failed. Please check your credentials and try again.", ScreenUtils.RED, false);
-            ScreenUtils.showLoading("\nGoing back", 6);
+            ScreenUtils.showLoading("\nGoing back", 3);
             return false;
         }
     }
@@ -109,10 +109,10 @@ public class Main {
 
         if ("REGISTER|true".equals(response)) {
             ScreenUtils.printMessage("\nRegistration successful! You can now log in.", ScreenUtils.GREEN, true);
-            ScreenUtils.showLoading("\nGoing back..", 15);
+            ScreenUtils.showLoading("\nGoing back..", 4);
         } else {
             ScreenUtils.printMessage("\nRegistration failed. The user ID may already exist.", ScreenUtils.RED, false);
-            ScreenUtils.showLoading("\nGoing back..", 7);
+            ScreenUtils.showLoading("\nGoing back..", 4);
         }
     }
 }

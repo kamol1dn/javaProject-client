@@ -385,11 +385,11 @@ public class ClientConnection {
     }
 
     private static String handleUserEditName(String[] parts) {
-        if (parts.length != 3) {
+        if (parts.length != 4) {
             return "USEREDITNAME|false";
         }
-        String userId = parts[1];
-        String newName = parts[2];
+        String userId = parts[2];
+        String newName = parts[3];
         if (!MOCK_USER_DB.containsKey(userId)) {
             return "USEREDITNAME|false";
         }
