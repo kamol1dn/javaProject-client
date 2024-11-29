@@ -1,13 +1,11 @@
 package utils;
 
 public class Session {
-    private static Session instance; // Singleton instance
-    private String userId;           // Logged-in user ID
+    private static Session instance;
+    private String userId;
 
-    // Private constructor to prevent instantiation from outside
-    private Session() {}
+   private Session() {}
 
-    // Get the singleton instance
     public static Session getInstance() {
         if (instance == null) {
             instance = new Session();
@@ -15,7 +13,6 @@ public class Session {
         return instance;
     }
 
-    // Getter and setter for userId
     public String getUserId() {
         return userId;
     }

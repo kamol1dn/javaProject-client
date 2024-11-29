@@ -1,5 +1,4 @@
 package ui.student;
-
 import utils.ScreenUtils;
 import utils.InputUtils;
 
@@ -7,10 +6,11 @@ public class StudentMenu {
     public static void show() {
         while (true) {
             ScreenUtils.clearScreen();
-            ScreenUtils.printHeader("Student Menu");
-            System.out.println("1. View Student Information");
-            System.out.println("2. View Timetable");
-            System.out.println("0. Go Back");
+            ScreenUtils.printHeader("Student Menu", ScreenUtils.CYAN);
+            ScreenUtils.printMessage("1. View Student Information", ScreenUtils.GREEN, false);
+            ScreenUtils.printMessage("2. View Timetable", ScreenUtils.BLUE, false);
+            ScreenUtils.printMessage("0. Go Back", ScreenUtils.WHITE, false);
+
             ScreenUtils.printDivider();
 
             int choice = InputUtils.getIntInRange("Enter your choice: ", 0, 2);

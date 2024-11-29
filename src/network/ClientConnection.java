@@ -6,10 +6,11 @@ import java.net.Socket;
 
 public class ClientConnection {
 
-    private static final String SERVER_HOST = "192.168.194.246"; // Replace with your Serveo public URL
-    private static final int SERVER_PORT = 8080; // Serveo forwards traffic over port 80
+    private static final String SERVER_HOST = "192.168.17.116";
+    private static final int SERVER_PORT = 8080;
 
     private static final int testVar = 0;
+
     public static String sendRequest(String request) {
         if (testVar == 0) {
             // Use mock database
@@ -50,7 +51,8 @@ public class ClientConnection {
         MOCK_TASKLIST.add(new String[]{"student2", "Finish Project", "22.23.2311"});
 
         // Timetable
-        MOCK_TIMETABLE.put("student1", new String[]{"Math", "Physics", "Chemistry", "Biology"});
+        MOCK_TIMETABLE.put("U1", new String[]{"Math;9:00", "Physics;12:00", "Chemistry;13:00",
+                "Biology;16:00"});
         MOCK_TIMETABLE.put("student2", new String[]{"History", "Economics", "Programming", "Art"});
     }
 
@@ -67,10 +69,9 @@ public class ClientConnection {
             return "ERROR|Unable to connect to server";
         }
     }
+
     public static String handleMockRequest(String request) {
         System.out.println("Mock request sent: " + request);
-
-        // Split the request into parts based on the '|' delimiter
         String[] parts = request.split("\\|");
         String command = parts[0]; // First part is the command
 
@@ -114,7 +115,6 @@ public class ClientConnection {
     }
 
 
-
     // ========================== Handlers for Commands ==========================
 
     private static String handleLogin(String[] parts) {
@@ -125,16 +125,14 @@ public class ClientConnection {
         String userId = parts[1];
         String password = parts[2];
 
-        // Check credentials
         if (MOCK_USER_DB.containsKey(userId) && MOCK_USER_DB.get(userId)[0].equals(password)) {
-            // Retrieve the user's name
+
             String userName = MOCK_USER_DB.get(userId)[1];
             return "LOGIN|true|" + userName;
         } else {
             return "LOGIN|false";
         }
     }
-
 
     private static String handleRegister(String[] parts) {
         if (parts.length != 4) {
@@ -153,46 +151,40 @@ public class ClientConnection {
         }
     }
 
-
     private static String handleTaskEdit(String[] parts) {
         if (parts.length != 4) {
             return "TASKEDIT|false"; // Invalid format
         }
 
-        String oldTaskName = parts[1]; // The existing task name to edit
-        String newTaskName = parts[2]; // The new task description
-        String newDeadline = parts[3]; // The new deadline
+        String oldTaskName = parts[1];
+        String newTaskName = parts[2];
+        String newDeadline = parts[3];
 
-        // Locate the task in the list
         boolean taskFound = false;
         for (String[] task : MOCK_TASKLIST) {
             String studentId = task[0];
             String currentTaskName = task[1];
             String currentDeadline = task[2];
 
-            // Check if this is the task to edit
             if (currentTaskName.equals(oldTaskName)) {
-                // Validation checks
-                if (currentTaskName.equals(newTaskName) && currentDeadline.equals(newDeadline)) {
+               if (currentTaskName.equals(newTaskName) && currentDeadline.equals(newDeadline)) {
                     return "TASKEDIT|false"; // No changes made
                 }
 
-                // Update task name and deadline
-                task[1] = newTaskName;
-                task[2] = newDeadline;
+               task[1] = newTaskName;
+               task[2] = newDeadline;
 
                 taskFound = true;
-                break; // Task found and updated, exit loop
+                break;
             }
         }
 
-        // If task was not found, return failure
         return taskFound ? "TASKEDIT|true" : "TASKEDIT|false";
     }
 
     private static String handleUserBooks(String[] parts) {
-        if (parts.length != 2) { // Validate input: USERBOOKS|userid
-            return "USERBOOKS|false"; // Invalid format
+        if (parts.length != 2) {
+            return "USERBOOKS|false";
         }
 
         String userId = parts[1]; // Extract the user ID from the request
@@ -200,13 +192,11 @@ public class ClientConnection {
 
         boolean hasBooks = false;
 
-        // Iterate through the book-user mapping to find books for the given user ID
-        for (String[] entry : MOCK_BOOK_USER) {
+       for (String[] entry : MOCK_BOOK_USER) {
             if (entry[0].equals(userId)) {
                 hasBooks = true;
                 String bookName = entry[1];
 
-                // Find the author for the book in the book list
                 for (String[] book : MOCK_BOOKLIST) {
                     if (book[0].equals(bookName)) {
                         response.append(bookName).append(",").append(book[1]).append("|");
@@ -216,16 +206,12 @@ public class ClientConnection {
             }
         }
 
-        // If no books are found, return an appropriate response
         if (!hasBooks) {
             return "USERBOOKS|false";
         }
 
-        // Remove the trailing delimiter and return the response
-        return response.substring(0, response.length() - 1); // Remove the last "|"
+       return response.substring(0, response.length() - 1); // Remove the last "|"
     }
-
-
 
     private static String handleTaskDeleteAll(String[] parts) {
         if (parts.length != 2) { // TASKALLDELETE requires 2 parts: command and user_id
@@ -235,7 +221,6 @@ public class ClientConnection {
         String userId = parts[1];
         boolean taskDeleted = false;
 
-
         Iterator<String[]> iterator = MOCK_TASKLIST.iterator();
         while (iterator.hasNext()) {
             String[] task = iterator.next();
@@ -244,7 +229,6 @@ public class ClientConnection {
                 taskDeleted = true;
             }
         }
-
 
         return taskDeleted ? "TASKALLDELETE|true" : "TASKALLDELETE|false";
     }
@@ -258,14 +242,12 @@ public class ClientConnection {
         String taskName = parts[2];
         String taskDeadline = parts[3];
 
-        // Check if a task with the same name already exists for the user
-        for (String[] task : MOCK_TASKLIST) {
+       for (String[] task : MOCK_TASKLIST) {
             if (task[0].equals(userId) && task[1].equals(taskName)) {
                 return "TASKADDNEW|false"; // Task with the same name already exists for the user
             }
         }
 
-        // Add the new task to the task list
         MOCK_TASKLIST.add(new String[]{userId, taskName, taskDeadline});
         return "TASKADDNEW|true"; // Success
     }
@@ -278,16 +260,14 @@ public class ClientConnection {
         String bookName = parts[2];
         String author = parts[3];
 
-        // Check if the book already exists
-        for (String[] book : MOCK_BOOKLIST) {
+       for (String[] book : MOCK_BOOKLIST) {
             if (book[0].equalsIgnoreCase(bookName) && book[1].equalsIgnoreCase(author)) {
-                return "ADDNEWBOOK|false"; // Book already exists
+                return "ADDNEWBOOK|false";
             }
-        }
+       }
 
-        // Add the new book to the book list
-        MOCK_BOOKLIST.add(new String[]{bookName, author});
-        return "ADDNEWBOOK|true"; // Success
+       MOCK_BOOKLIST.add(new String[]{bookName, author});
+       return "ADDNEWBOOK|true"; // Success
     }
 
     private static String handleViewAllBooks(String[] parts) {
@@ -302,7 +282,6 @@ public class ClientConnection {
         return response.toString(); // Returns list of all books
     }
 
-
     private static String handleAssignBook(String[] parts) {
         if (parts.length != 3) {
             return "ASSIGNBOOK|false"; // Invalid format
@@ -311,18 +290,14 @@ public class ClientConnection {
         String userId = parts[1];
         String bookName = parts[2];
 
-        // Check if the book is already assigned to the user
-        for (String[] entry : MOCK_BOOK_USER) {
+       for (String[] entry : MOCK_BOOK_USER) {
             if (entry[0].equals(userId) && entry[1].equals(bookName)) {
                 return "ASSIGNBOOK|false"; // User already borrowed the book
             }
         }
-
-        // Assign the book to the user
         MOCK_BOOK_USER.add(new String[]{userId, bookName});
         return "ASSIGNBOOK|true"; // Success
     }
-
 
     private static String handleReturnBook(String[] parts) {
         if (parts.length != 3) {
@@ -332,42 +307,34 @@ public class ClientConnection {
         String bookName = parts[2];
 
         boolean bookFound = false;
-
-        // Iterate through the book-user mapping to find the matching user and book
         Iterator<String[]> iterator = MOCK_BOOK_USER.iterator();
         while (iterator.hasNext()) {
             String[] entry = iterator.next();
             if (entry[0].equals(userId) && entry[1].equals(bookName)) {
-                iterator.remove(); // Remove the book from the user's assigned books
+                iterator.remove();
                 bookFound = true;
-                break; // Exit loop after finding and removing the book
+                break;
             }
         }
-
-        // Return success if the book was found and removed, otherwise return failure
         return bookFound ? "BOOKRETURN|true" : "BOOKRETURN|false";
     }
 
-
     private static String handleDetailStudent(String[] parts) {
-        if (parts.length != 2) { // STUDENTDETAIL requires 2 parts: command and userid
-            return "STUDENTDETAIL|false"; // Invalid format
+        if (parts.length != 2) {
+            return "STUDENTDETAIL|false";
         }
 
         String userId = parts[1];
 
-        // Check if the user exists in the mock database
         if (!MOCK_USER_DB.containsKey(userId)) {
             return "STUDENTDETAIL|false"; // User not found
         }
 
-        // Retrieve the user details
         String[] userDetails = MOCK_USER_DB.get(userId);
         String password = userDetails[0];
         String name = userDetails[1];
 
-        // Return the formatted response
-        return String.format("STUDENTDETAIL|%s|%s|%s", name, userId, password);
+        return String.format("STUDENTDETAIL|true|%s|%s|%s", name, userId, password);
     }
 
     private static String handleTaskList(String[] parts) {
@@ -386,83 +353,86 @@ public class ClientConnection {
     }
 
     private static String handleTimetableEdit(String[] parts) {
-        if (parts.length != 4) { // TIMETABLEEDIT requires 4 parts: command, userid, slot_N, newname
-            return "TIMETABLEEDIT|false"; // Invalid format
+        if (parts.length != 4) {
+            return "TIMETABLEEDIT|false";
         }
 
         String userId = parts[1];
         String slot = parts[2];
         String newName = parts[3];
 
-        // Validate slot number (should be between slot_1 and slot_4)
         if (!slot.matches("slot_[1-4]")) {
             return "TIMETABLEEDIT|false"; // Invalid slot number
         }
 
-        // Validate new name (ensure it's not empty)
         if (newName == null || newName.trim().isEmpty()) {
-            return "TIMETABLEEDIT|false"; // Invalid new name
+            return "TIMETABLEEDIT|false";
         }
 
-        // Simulate a success response (no database changes)
+        if (!MOCK_TIMETABLE.containsKey(userId)) {
+            return "TIMETABLEEDIT|false";
+        }
+
+        int slotIndex = Integer.parseInt(slot.split("_")[1]) - 1;
+
+        String[] timetable = MOCK_TIMETABLE.get(userId);
+        if (slotIndex < 0 || slotIndex >= timetable.length) {
+            return "TIMETABLEEDIT|false";
+        }
+        timetable[slotIndex] = newName;
+        MOCK_TIMETABLE.put(userId, timetable);
         return "TIMETABLEEDIT|true";
     }
 
+    private static String handleUserEditName(String[] parts) {
+        if (parts.length != 3) {
+            return "USEREDITNAME|false";
+        }
+        String userId = parts[1];
+        String newName = parts[2];
+        if (!MOCK_USER_DB.containsKey(userId)) {
+            return "USEREDITNAME|false";
+        }
+        MOCK_USER_DB.get(userId)[1] = newName;
+        return "USEREDITNAME|true";
+    }
+
+    private static String handleUserEditPassword (String[]parts){
+                if (parts.length != 3) {
+                    return "USEREDITPASSWORD|false";
+                }
+
+                String userId = parts[1];
+                String newPassword = parts[2];
+
+                if (!MOCK_USER_DB.containsKey(userId)) {
+                    return "USEREDITPASSWORD|false";
+                }
+                MOCK_USER_DB.get(userId)[0] = newPassword;
+                return "USEREDITPASSWORD|true";
+    }
+
     private static String handleTimetableView(String[] parts) {
+        // Validate input length
         if (parts.length != 2) {
             return "TIMETABLE|false";
         }
 
-        String userId = parts[1];
+        // Extract userId and trim whitespace
+        String userId = parts[1].trim();
+
+        // Check if user exists in MOCK_TIMETABLE
         if (!MOCK_TIMETABLE.containsKey(userId)) {
             return "TIMETABLE|false";
         }
 
-        StringBuilder response = new StringBuilder("TIMETABLE");
+        // Build the response string
+        StringBuilder response = new StringBuilder("TIMETABLE|true");
         for (String slot : MOCK_TIMETABLE.get(userId)) {
             response.append("|").append(slot);
         }
+
         return response.toString();
-
-
-    }
-
-    private static String handleUserEditName(String[] parts) {
-        if (parts.length != 3) { // USEREDITNAME requires 3 parts: command, userid, newname
-            return "USEREDITNAME|false"; // Invalid format
-        }
-
-        String userId = parts[1];
-        String newName = parts[2];
-
-        // Check if the user exists in the mock database
-        if (!MOCK_USER_DB.containsKey(userId)) {
-            return "USEREDITNAME|false"; // User not found
-        }
-
-        // Update the user's name
-        MOCK_USER_DB.get(userId)[1] = newName;
-
-        return "USEREDITNAME|true"; // Success
-    }
-
-    private static String handleUserEditPassword(String[] parts) {
-        if (parts.length != 3) { // USEREDITPASSWORD requires 3 parts: command, userid, newpassword
-            return "USEREDITPASSWORD|false"; // Invalid format
-        }
-
-        String userId = parts[1];
-        String newPassword = parts[2];
-
-        // Check if the user exists in the mock database
-        if (!MOCK_USER_DB.containsKey(userId)) {
-            return "USEREDITPASSWORD|false"; // User not found
-        }
-
-        // Update the user's password
-        MOCK_USER_DB.get(userId)[0] = newPassword;
-
-        return "USEREDITPASSWORD|true"; // Success
     }
 
 

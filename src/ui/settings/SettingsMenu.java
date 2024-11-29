@@ -7,26 +7,25 @@ public class SettingsMenu {
     public static void show() {
         while (true) {
             ScreenUtils.clearScreen();
-            ScreenUtils.printHeader("Settings Menu");
-            System.out.println("1. Edit Name");
-            System.out.println("2. Edit Password");
-            System.out.println("3. Edit Birthday");
+            ScreenUtils.printHeader("Settings Menu", ScreenUtils.PURPLE);
+            ScreenUtils.printMessage("1. Edit Name", ScreenUtils.GREEN, false);
+            ScreenUtils.printMessage("2. Edit Password", ScreenUtils.CYAN, false);
             System.out.println("0. Go Back");
             ScreenUtils.printDivider();
 
-            int choice = InputUtils.getIntInRange("Enter your choice: ", 0, 4);
+            int choice = InputUtils.getIntInRange("Enter your choice: ", 0, 2);
 
             switch (choice) {
                 case 1 -> EditNameUI.show();
                 case 2 -> EditPasswordUI.show();
-                case 3 -> EditBirthdayUI.show();
+
                 case 0 -> {
-                    return; // Exit the Settings Menu
+                    return;
                 }
                 default -> System.out.println("Invalid choice. Try again.");
             }
 
-            ScreenUtils.promptEnterKey(); // Pause before going back to the menu
+            ScreenUtils.promptEnterKey();
         }
     }
 }
