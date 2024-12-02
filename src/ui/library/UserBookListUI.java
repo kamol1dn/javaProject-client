@@ -58,6 +58,7 @@ public class UserBookListUI {
                             String row = String.format("| %-5d | %-25s | %-12s |", (i + 1), bookTitle, bookAuthor);
                             ScreenUtils.printMessage(row, ScreenUtils.WHITE, false);
                         }
+                        ScreenUtils.showLoading(1);
                     }
 
                     // Print the table footer
@@ -68,22 +69,25 @@ public class UserBookListUI {
                     int choice = InputUtils.getInt();
 
                     if (choice == 0) {
-                        // Exit the book management UI
+
                         return;
                     } else if (choice > 0 && choice <= books.length) {
-                        // Return the selected book
+
                         String[] selectedBook = books[choice - 1].split(",");
                         String bookName = selectedBook[0];
 
                         String returnRequest = "BOOKRETURN|" + User.getInstance().getUserId() + "|" + bookName;
                         String returnResponse = ClientConnection.sendRequest(returnRequest);
 
-                        if (returnResponse =="BOOKRETURN|true") {
+                        if (returnResponse.startsWith("BOOKRETURN|true")) {
+                            ScreenUtils.showLoading("Returning book: "+bookName, 4);
                             ScreenUtils.printMessage("Book returned successfully: " + bookName, ScreenUtils.GREEN, true);
                         } else if (returnResponse == "BOOKRETURN|false"){
+                            ScreenUtils.showLoading("Returning book: "+bookName, 4);
                             ScreenUtils.printMessage("Failed: " + bookName, ScreenUtils.GREEN, false);
                         } else
                         {
+                            ScreenUtils.showLoading("Returning book: "+bookName, 4);
                             ScreenUtils.printMessage("Failed to return the book: " + bookName, ScreenUtils.RED, true);
                         }
 

@@ -6,14 +6,14 @@ import java.net.Socket;
 
 public class ClientConnection {
 
-    private static final String SERVER_HOST = "192.168.17.116";
+    private static final String SERVER_HOST = "192.168.18.34";
     private static final int SERVER_PORT = 8080;
 
-    private static final int testVar = 0;
+    private static final int testVar = 1;
 
     public static String sendRequest(String request) {
         if (testVar == 0) {
-            // Use mock database
+
             return handleMockRequest(request);
         } else {
             // Use actual server connection
@@ -53,8 +53,7 @@ public class ClientConnection {
         // Timetable
         MOCK_TIMETABLE.put("U1", new String[]{"Math;9:00", "Physics;12:00", "Chemistry;13:00",
                 "Biology;16:00"});
-        MOCK_TIMETABLE.put("student2", new String[]{"History", "Economics", "Programming", "Art"});
-    }
+        }
 
 
     public static String handleServerRequest(String request) {

@@ -104,14 +104,25 @@ public class ScreenUtils {
     }
 
     public static void showLoading(String message, int duration) {
-    System.out.print(message);
-    for (int i = 0; i < duration; i++) {
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-        }
+        System.out.print(message);
+        for (int i = 0; i < duration; i++) {
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
         System.out.print(" *");
+        }
+        System.out.println();
     }
-    System.out.println();
-}}
+    public static void showLoading(int duration) {
+
+        for (int i = 0; i < duration; i++) {
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+        }
+    }
+}

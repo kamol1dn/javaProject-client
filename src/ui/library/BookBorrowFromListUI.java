@@ -45,14 +45,14 @@ public class BookBorrowFromListUI {
             // Print the table footer
             ScreenUtils.printMessage("=================================================", ScreenUtils.CYAN, true);
 
-            // Prompt the user to choose a book
+
             ScreenUtils.printMessage("Choose a book to get");
             int choice = InputUtils.getInt();
 
             if (choice == 0) {
-                return; // User canceled the operation
+
             } else if (choice > 0 && choice <= books.length) {
-                // Get the selected book's title
+
                 String[] selectedBook = books[choice - 1].split(",");
                 String bookName = selectedBook[0];
 
@@ -69,7 +69,7 @@ public class BookBorrowFromListUI {
                 ScreenUtils.printMessage("Invalid option. Please try again.", ScreenUtils.RED, true);
             }
         } else {
-            // Handle failure to fetch books
+
             ScreenUtils.printMessage("Failed to fetch books. Please try again later.", ScreenUtils.RED, true);
         }
 
