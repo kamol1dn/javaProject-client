@@ -16,8 +16,8 @@ public class StudentInfoUI {
             ScreenUtils.printMessage("Student Details:", ScreenUtils.GREEN, true);
             String[] userDetails = response.split("\\|");
             String userId = userDetails[2];
-            String userName = userDetails[3];
-            String userPassword = userDetails[4];
+            String userName = userDetails[4];
+            String userPassword = userDetails[3];
             ScreenUtils.printDivider();
 
             ScreenUtils.printMessage("Student ID: " + userId, ScreenUtils.BLUE, true);

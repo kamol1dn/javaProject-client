@@ -15,6 +15,9 @@ public class TimetableUI {
         String request = "VIEWTIMETABLE|" + User.getInstance().getUserId();
         String response = ClientConnection.sendRequest(request);
 
+        //test
+        System.out.println("test response " +response);
+
         if (response.startsWith("TIMETABLE|true")) {
             // Parse timetable data
             String[] parts = response.split("\\|");
