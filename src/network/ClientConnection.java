@@ -38,7 +38,7 @@ public class ClientConnection {
     }
 
     public static String handleMockRequest(String request) {
-        System.out.println("Mock request sent: " + request);
+
         String[] parts = request.split("\\|");
         String command = parts[0]; // First part is the command
 

@@ -313,7 +313,7 @@ public class MockFunctions {
             return "TIMETABLEEDIT|false";
         }
 
-        //  String userId = parts[2];  // we dont need it there yet
+        //  String userId = parts[2];  // we don't need it there yet
         int day = Integer.parseInt(parts[3]);
         String slot = parts[4];
         String newName = parts[5];

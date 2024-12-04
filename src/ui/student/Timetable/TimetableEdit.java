@@ -4,13 +4,16 @@ import models.User;
 import network.ClientConnection;
 import utils.InputUtils;
 import utils.ScreenUtils;
+import ui.student.Timetable.PrintTable;
 
 import java.util.Scanner;
 
 public class TimetableEdit {
 
-    public static void timetableEdit(int day){
-
+    public static void timetableEdit(int day, String[][] timetable){
+        ScreenUtils.clearScreen();
+        ScreenUtils.printHeader("Student Timetable", ScreenUtils.BLUE);
+        PrintTable.printTimetableRow(timetable, day-1);
         //confirmation message
         switch (day){
             case 1:
@@ -32,6 +35,7 @@ public class TimetableEdit {
                 ScreenUtils.printMessage("Day chosen: Saturday", ScreenUtils.GREEN, true);
                 break;
         }
+
         // User interaction for editing
         Scanner scanner = new Scanner(System.in);
         while (true) {
@@ -43,6 +47,11 @@ public class TimetableEdit {
                 // Go back to the previous menu
                 return;
             } else if (choice >= 1 && choice <= 4) {
+
+                ScreenUtils.clearScreen();
+                ScreenUtils.printHeader("Student Timetable", ScreenUtils.BLUE);
+                PrintTable.printTimetableSlot(timetable, day-1, choice-1);
+
                 // Edit selected timetable slot
                 System.out.print("Enter new subject: ");
                 String newSubject = scanner.nextLine().trim();

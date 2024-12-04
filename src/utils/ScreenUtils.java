@@ -41,6 +41,7 @@ public class ScreenUtils {
     }
     public static void printHeader(String title, String color) {
         printDivider(color);
+        printCentered(BOLD+ "title", 20, color);
         System.out.println(color + BOLD + "  " + title + RESET);
         printDivider(color);
     }

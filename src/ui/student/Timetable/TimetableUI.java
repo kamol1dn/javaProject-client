@@ -19,8 +19,8 @@ public class TimetableUI {
         String request = "VIEWTIMETABLE|" + User.getInstance().getUserId();
         String response = ClientConnection.sendRequest(request);
 
-        // Test
-        System.out.println("Test response: " + response);
+
+
 
         if (response.startsWith("VIEWTIMETABLE|true")) {
             // Parse timetable data
@@ -46,7 +46,7 @@ public class TimetableUI {
             System.out.print("Enter the day (1-6) to edit timetable: ");
             int day = InputUtils.getIntInRange("Enter day to edit: (Monday: 1...)", 1, 6);
 
-            TimetableEdit.timetableEdit(day);
+            TimetableEdit.timetableEdit(day, timetable);
 
 
         } else {
