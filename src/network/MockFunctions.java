@@ -309,11 +309,11 @@ public class MockFunctions {
     }
 
     protected static String handleTimetableEdit(String[] parts) {
-        if (parts.length != 5) {
+        if (parts.length != 6) {
             return "TIMETABLEEDIT|false";
         }
 
-        String userId = parts[2];
+        //  String userId = parts[2];  // we dont need it there yet
         int day = Integer.parseInt(parts[3]);
         String slot = parts[4];
         String newName = parts[5];
@@ -347,7 +347,7 @@ public class MockFunctions {
     private static String handleTimetableEditMonday(String[] parts) {
 
         String userId = parts[2];
-        int day = Integer.parseInt(parts[3]);
+        // no need for day anymore
         String slot = parts[4];
         String newName = parts[5];
 

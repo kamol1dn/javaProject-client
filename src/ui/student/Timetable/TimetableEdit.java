@@ -2,6 +2,7 @@ package ui.student.Timetable;
 
 import models.User;
 import network.ClientConnection;
+import utils.InputUtils;
 import utils.ScreenUtils;
 
 import java.util.Scanner;
@@ -34,14 +35,9 @@ public class TimetableEdit {
         // User interaction for editing
         Scanner scanner = new Scanner(System.in);
         while (true) {
-            System.out.print("Enter No to edit (0 to go back): ");
+            System.out.print("Enter slot number to edit (0 to go back): ");
             int choice;
-            try {
-                choice = Integer.parseInt(scanner.nextLine());
-            } catch (NumberFormatException e) {
-                System.out.println("Invalid input. Please enter a number between 0-4.");
-                continue;
-            }
+            choice= InputUtils.getIntInRange(" ",0,4);
 
             if (choice == 0) {
                 // Go back to the previous menu
@@ -51,7 +47,7 @@ public class TimetableEdit {
                 System.out.print("Enter new subject: ");
                 String newSubject = scanner.nextLine().trim();
                 System.out.print("Enter new time (hh:mm): ");
-                String newTime = scanner.nextLine().trim();
+                String newTime =InputUtils.getTime("hh:mm");
 
                 // Validate inputs
                 if (newSubject.isEmpty() || newTime.isEmpty()) {

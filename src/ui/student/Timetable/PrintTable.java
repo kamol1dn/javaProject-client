@@ -19,7 +19,7 @@ public class PrintTable {
                     String time = slotParts[1];
                     System.out.printf("| %-15s %s", subject, time);
                 } else {
-                    System.out.printf("| %-18s", "Empty");
+                    System.out.printf("| %-15s %s", "subject", "00:00");
                 }
             }
             System.out.println();
