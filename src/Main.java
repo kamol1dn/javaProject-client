@@ -9,7 +9,7 @@ public class Main {
     public static void main(String[] args) {
         // Clear the screen and show a welcome message
         ScreenUtils.clearScreen();
-        ScreenUtils.printHeader("Welcome to Student Companion App", ScreenUtils.CYAN);
+        ScreenUtils.printHeader("StudyLink", ScreenUtils.CYAN);
 
         Scanner scanner = new Scanner(System.in);
         boolean loggedIn = false;
@@ -17,7 +17,7 @@ public class Main {
         // Loop for Login or Register
         while (!loggedIn) {
             ScreenUtils.clearScreen();
-            ScreenUtils.printHeader("Welcome to Student Companion App", ScreenUtils.CYAN);
+            ScreenUtils.printHeader("StudyLink", ScreenUtils.CYAN);
             ScreenUtils.printMessage("Main Menu:", ScreenUtils.YELLOW, true);
             ScreenUtils.printMessage("1. Login", ScreenUtils.GREEN, false);
             ScreenUtils.printMessage("2. Register", ScreenUtils.BLUE, false);
