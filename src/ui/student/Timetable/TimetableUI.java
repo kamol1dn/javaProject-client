@@ -54,8 +54,7 @@ public class TimetableUI {
             System.out.println("No timetable available or invalid user.");
         }
 
-        // Wait for the user to press Enter
-        ScreenUtils.promptEnterKey();
+
     }
 
 

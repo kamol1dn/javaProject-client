@@ -24,6 +24,5 @@ public class StudentInfoUI {
             ScreenUtils.printMessage("Student Name: " + userName, ScreenUtils.BLUE, true);
             ScreenUtils.printMessage("Student Password: " + userPassword, ScreenUtils.BLUE, true);
         }
-        ScreenUtils.promptEnterKey(); // Wait for the user to press Enter
     }
 }
