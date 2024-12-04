@@ -1,4 +1,5 @@
 package ui.student;
+import ui.student.Timetable.TimetableUI;
 import utils.ScreenUtils;
 import utils.InputUtils;
 

@@ -1,3 +1,7 @@
+
+///// this class remembers user id for the session and assigns it to user object
+
+
 package utils;
 
 public class Session {

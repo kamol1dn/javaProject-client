@@ -29,7 +29,7 @@ public class BookBorrowFromListUI {
 
             // Print the table header
             ScreenUtils.printMessage("=================================================", ScreenUtils.CYAN, true);
-            ScreenUtils.printMessage("|   #   |           Book Title          |   Author       |", ScreenUtils.CYAN, true);
+            ScreenUtils.printMessage("|   #   |         Book Title        |    Author    |", ScreenUtils.CYAN, true);
             ScreenUtils.printMessage("-------------------------------------------------", ScreenUtils.CYAN, true);
 
             // Loop through the books and display them in a table format
@@ -37,9 +37,21 @@ public class BookBorrowFromListUI {
                 String[] bookDetails = books[i].split(",");
                 String bookTitle = bookDetails[0];
                 String bookAuthor = bookDetails[1];
+                /// change names if it exeedes the amount that it breaks the table
+                int maxTitleLength = 25;
+                int maxAuthorLength = 12;
+                if (bookTitle.length() > maxTitleLength) {
+                    bookTitle = bookTitle.substring(0, maxTitleLength - 2) + "_.";
+                }
+                if (bookAuthor.length() > maxAuthorLength) {
+                    bookAuthor = bookAuthor.substring(0, maxAuthorLength - 2) + "_.";
+                }
+
 
                 String row = String.format("| %-5d | %-25s | %-12s |", (i + 1), bookTitle, bookAuthor);
                 ScreenUtils.printMessage(row, ScreenUtils.WHITE, false);
+
+                ScreenUtils.showLoading(1);
             }
 
             // Print the table footer
@@ -59,6 +71,8 @@ public class BookBorrowFromListUI {
                 // Send request to assign the book to the user
                 String assignRequest = "ASSIGNBOOK|" + User.getInstance().getUserId() + "|" + bookName;
                 String assignResponse = ClientConnection.sendRequest(assignRequest);
+
+                ScreenUtils.showLoading("Brorrowing book...",2);
 
                 if (assignResponse.startsWith("ASSIGNBOOK|true")) {
                     ScreenUtils.printMessage("Book borrowed successfully: " + bookName, ScreenUtils.GREEN, true);

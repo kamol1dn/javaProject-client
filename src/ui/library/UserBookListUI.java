@@ -28,7 +28,7 @@ public class UserBookListUI {
 
                     // Print the table header
                     ScreenUtils.printMessage("=================================================", ScreenUtils.CYAN, true);
-                    ScreenUtils.printMessage("|   #   |           Book Title      |   Author     |", ScreenUtils.CYAN, true);
+                    ScreenUtils.printMessage("|   #   |           Book Title      |   Author      |", ScreenUtils.CYAN, true);
                     ScreenUtils.printMessage("-------------------------------------------------", ScreenUtils.CYAN, true);
 
                     // Loop through the books and display them in a table format
@@ -58,7 +58,7 @@ public class UserBookListUI {
                             String row = String.format("| %-5d | %-25s | %-12s |", (i + 1), bookTitle, bookAuthor);
                             ScreenUtils.printMessage(row, ScreenUtils.WHITE, false);
                         }
-                        ScreenUtils.showLoading(1);
+
                     }
 
                     // Print the table footer

@@ -1,5 +1,4 @@
 package network;
-import java.util.*;
 import java.io.*;
 import java.net.Socket;
 
@@ -10,14 +9,13 @@ public class ClientConnection {
     private static final String SERVER_HOST = "192.168.17.111";
     private static final int SERVER_PORT = 8080;
 
-    private static final int testVar = 1;
+    //... for debugging with mock server (0) or using actual server (1)
+    private static final int testVar = 0;
 
     public static String sendRequest(String request) {
         if (testVar == 0) {
-
             return handleMockRequest(request);
         } else {
-            // Use actual server connection
             return handleServerRequest(request);
         }
     }
@@ -45,41 +43,57 @@ public class ClientConnection {
         String command = parts[0]; // First part is the command
 
         switch (command) {
-            case "LOGIN":
+            case "LOGIN" -> {
                 return handleLogin(parts);
-            case "REGISTER":
+            }
+            case "REGISTER" -> {
                 return handleRegister(parts);
-            case "TASKLIST":
+            }
+            case "TASKLIST" -> {
                 return handleTaskList(parts);
-            case "TASKEDIT":
+            }
+            case "TASKEDIT" -> {
                 return handleTaskEdit(parts);
-            case "TASKALLDELETE":
+            }
+            case "TASKALLDELETE" -> {
                 return handleTaskDeleteAll(parts);
-            case "TASKSADDNEW":
+            }
+            case "TASKSADDNEW" -> {
                 return handleTaskAddNew(parts);
-            case "ADDNEWBOOK":
+            }
+            case "ADDNEWBOOK" -> {
                 return handleAddBook(parts);
-            case "ASSIGNBOOK":
+            }
+            case "ASSIGNBOOK" -> {
                 return handleAssignBook(parts);
-            case "BOOKRETURN":
+            }
+            case "BOOKRETURN" -> {
                 return handleReturnBook(parts);
-            case "STUDENTDETAIL":
+            }
+            case "STUDENTDETAIL" -> {
                 return handleDetailStudent(parts);
-            case "VIEWALLBOOKS": // view all books
+            }
+            case "VIEWALLBOOKS" -> {
                 return handleViewAllBooks(parts);
-            case "USERBOOKS": //viev user's all books
+            }
+            case "USERBOOKS" -> {
                 return handleUserBooks(parts);
-            case "TIMETABLEEDIT":
+            }
+            case "TIMETABLEEDIT" -> {
                 return handleTimetableEdit(parts);
-            case "VIEWTIMETABLE":
+            }
+            case "VIEWTIMETABLE" -> {
                 return handleTimetableView(parts);
-            case "USEREDITNAME":
+            }
+            case "USEREDITNAME" -> {
                 return handleUserEditName(parts);
-            case "USEREDITPASSWORD":
+            }
+            case "USEREDITPASSWORD" -> {
                 return handleUserEditPassword(parts);
-
-            default:
+            }
+            default -> {
                 return command + "|false"; // Unknown command
+            }
         }
     }
 }

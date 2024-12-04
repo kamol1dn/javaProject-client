@@ -1,8 +1,5 @@
 package network;
-import network.ClientConnection;
-
 import java.util.Iterator;
-
 import static network.MockData.*;
 
 
@@ -246,38 +243,6 @@ public class MockFunctions {
         return response.toString();
     }
 
-    protected static String handleTimetableEdit(String[] parts) {
-        if (parts.length != 4) {
-            return "TIMETABLEEDIT|false";
-        }
-
-        String userId = parts[1];
-        String slot = parts[2];
-        String newName = parts[3];
-
-        if (!slot.matches("slot_[1-4]")) {
-            return "TIMETABLEEDIT|false"; // Invalid slot number
-        }
-
-        if (newName == null || newName.trim().isEmpty()) {
-            return "TIMETABLEEDIT|false";
-        }
-
-        if (!MOCK_TIMETABLE.containsKey(userId)) {
-            return "TIMETABLEEDIT|false";
-        }
-
-        int slotIndex = Integer.parseInt(slot.split("_")[1]) - 1;
-
-        String[] timetable = MOCK_TIMETABLE.get(userId);
-        if (slotIndex < 0 || slotIndex >= timetable.length) {
-            return "TIMETABLEEDIT|false";
-        }
-        timetable[slotIndex] = newName;
-        MOCK_TIMETABLE.put(userId, timetable);
-        return "TIMETABLEEDIT|true";
-    }
-
     protected static String handleUserEditName(String[] parts) {
         if (parts.length != 4) {
             return "USEREDITNAME|false";
@@ -309,27 +274,203 @@ public class MockFunctions {
     protected static String handleTimetableView(String[] parts) {
         // Validate input length
         if (parts.length != 2) {
-            return "TIMETABLE|false";
+            return "VIEWTIMETABLE|false";
         }
 
         // Extract userId and trim whitespace
         String userId = parts[1].trim();
 
-        // Check if user exists in MOCK_TIMETABLE
-        if (!MOCK_TIMETABLE.containsKey(userId)) {
-            return "TIMETABLE|false";
+        // Check if user exists in the timetable maps
+        boolean userExists = MOCK_TIMETABLE_MONDAY.containsKey(userId) &&
+                MOCK_TIMETABLE_TUESDAY.containsKey(userId) &&
+                MOCK_TIMETABLE_WEDNESDAY.containsKey(userId) &&
+                MOCK_TIMETABLE_THURSDAY.containsKey(userId) &&
+                MOCK_TIMETABLE_FRIDAY.containsKey(userId);
+
+        if (!userExists) {
+            return "VIEWTIMETABLE|false";
         }
 
         // Build the response string
-        StringBuilder response = new StringBuilder("TIMETABLE|true");
-        for (String slot : MOCK_TIMETABLE.get(userId)) {
-            response.append("|").append(slot);
-        }
+        StringBuilder response = new StringBuilder("VIEWTIMETABLE|true");
+
+        // Append each day's timetable to the response
+        response.append(String.join("|", MOCK_TIMETABLE_MONDAY.get(userId)));
+        response.append(String.join("|", MOCK_TIMETABLE_TUESDAY.get(userId)));
+        response.append(String.join("|", MOCK_TIMETABLE_WEDNESDAY.get(userId)));
+        response.append(String.join("|", MOCK_TIMETABLE_THURSDAY.get(userId)));
+        response.append(String.join("|", MOCK_TIMETABLE_FRIDAY.get(userId)));
 
         return response.toString();
     }
 
+    protected static String handleTimetableEdit(String[] parts) {
+        if (parts.length != 5) {
+            return "TIMETABLEEDIT|false";
+        }
 
+        String userId = parts[2];
+        int day = Integer.parseInt(parts[3]);
+        String slot = parts[4];
+        String newName = parts[5];
+
+        if (!slot.matches("slot_[1-4]")) {
+            return "TIMETABLEEDIT|false"; // Invalid slot number
+        }
+
+        if (newName == null || newName.trim().isEmpty()) {
+            return "TIMETABLEEDIT|false";
+        }
+        switch (day){
+            case 1:
+                return handleTimetableEditMonday(parts);
+            case 2:
+                return handleTimetableEditTuesday(parts);
+            case 3:
+                return handleTimetableEditWednesday(parts);
+            case 4:
+                return  handleTimetableEditThursday(parts);
+            case 5:
+                return  handleTimetableEditFriday(parts);
+            case 6:
+                return  handleTimetableEditSaturday(parts);
+
+            default: return "TIMETABLEEDIT|false";
+        }
+
+    }
+
+    private static String handleTimetableEditMonday(String[] parts) {
+
+        String userId = parts[2];
+        int day = Integer.parseInt(parts[3]);
+        String slot = parts[4];
+        String newName = parts[5];
+
+
+        if (!MOCK_TIMETABLE_MONDAY.containsKey(userId)) {
+            return "TIMETABLEEDIT|false";
+        }
+
+        int slotIndex = Integer.parseInt(slot.split("_")[1]) - 1;
+
+        String[] timetable = MOCK_TIMETABLE_MONDAY.get(userId);
+        if (slotIndex < 0 || slotIndex >= timetable.length) {
+            return "TIMETABLEEDIT|false";
+        }
+        timetable[slotIndex] = newName;
+        MOCK_TIMETABLE_MONDAY.put(userId, timetable);
+        return "TIMETABLEEDIT|true";
+    }
+   private static String handleTimetableEditTuesday(String[] parts) {
+        String userId = parts[2];
+        int day = Integer.parseInt(parts[3]);
+        String slot = parts[4];
+        String newName = parts[5];
+
+
+        if (!MOCK_TIMETABLE_TUESDAY.containsKey(userId)) {
+            return "TIMETABLEEDIT|false";
+        }
+
+        int slotIndex = Integer.parseInt(slot.split("_")[1]) - 1;
+
+        String[] timetable = MOCK_TIMETABLE_TUESDAY.get(userId);
+        if (slotIndex < 0 || slotIndex >= timetable.length) {
+            return "TIMETABLEEDIT|false";
+        }
+        timetable[slotIndex] = newName;
+        MOCK_TIMETABLE_TUESDAY.put(userId, timetable);
+
+        return "TIMETABLEEDIT|true";
+   }
+
+    private static String handleTimetableEditWednesday(String[] parts) {
+        String userId = parts[2];
+        int day = Integer.parseInt(parts[3]);
+        String slot = parts[4];
+        String newName = parts[5];
+
+
+        if (!MOCK_TIMETABLE_WEDNESDAY.containsKey(userId)) {
+            return "TIMETABLEEDIT|false";
+        }
+
+        int slotIndex = Integer.parseInt(slot.split("_")[1]) - 1;
+
+        String[] timetable = MOCK_TIMETABLE_WEDNESDAY.get(userId);
+        if (slotIndex < 0 || slotIndex >= timetable.length) {
+            return "TIMETABLEEDIT|false";
+        }
+        timetable[slotIndex] = newName;
+        MOCK_TIMETABLE_WEDNESDAY.put(userId, timetable);
+        return "TIMETABLEEDIT|true";
+    }
+    private static String handleTimetableEditThursday(String[] parts) {
+        String userId = parts[2];
+        int day = Integer.parseInt(parts[3]);
+        String slot = parts[4];
+        String newName = parts[5];
+
+
+        if (!MOCK_TIMETABLE_THURSDAY.containsKey(userId)) {
+            return "TIMETABLEEDIT|false";
+        }
+
+        int slotIndex = Integer.parseInt(slot.split("_")[1]) - 1;
+
+        String[] timetable = MOCK_TIMETABLE_THURSDAY.get(userId);
+        if (slotIndex < 0 || slotIndex >= timetable.length) {
+            return "TIMETABLEEDIT|false";
+        }
+        timetable[slotIndex] = newName;
+        MOCK_TIMETABLE_THURSDAY.put(userId, timetable);
+        return "TIMETABLEEDIT|true";
+    }
+
+    private static String handleTimetableEditFriday(String[] parts) {
+        String userId = parts[2];
+        int day = Integer.parseInt(parts[3]);
+        String slot = parts[4];
+        String newName = parts[5];
+
+
+        if (!MOCK_TIMETABLE_FRIDAY.containsKey(userId)) {
+            return "TIMETABLEEDIT|false";
+        }
+
+        int slotIndex = Integer.parseInt(slot.split("_")[1]) - 1;
+
+        String[] timetable = MOCK_TIMETABLE_FRIDAY.get(userId);
+        if (slotIndex < 0 || slotIndex >= timetable.length) {
+            return "TIMETABLEEDIT|false";
+        }
+        timetable[slotIndex] = newName;
+        MOCK_TIMETABLE_FRIDAY.put(userId, timetable);
+        return "TIMETABLEEDIT|true";
+    }
+
+    private static String handleTimetableEditSaturday(String[] parts) {
+        String userId = parts[2];
+        int day = Integer.parseInt(parts[3]);
+        String slot = parts[4];
+        String newName = parts[5];
+
+
+        if (!MOCK_TIMETABLE_SATURDAY.containsKey(userId)) {
+            return "TIMETABLEEDIT|false";
+        }
+
+        int slotIndex = Integer.parseInt(slot.split("_")[1]) - 1;
+
+        String[] timetable = MOCK_TIMETABLE_SATURDAY.get(userId);
+        if (slotIndex < 0 || slotIndex >= timetable.length) {
+            return "TIMETABLEEDIT|false";
+        }
+        timetable[slotIndex] = newName;
+        MOCK_TIMETABLE_SATURDAY.put(userId, timetable);
+        return "TIMETABLEEDIT|true";
+    }
 }
     
     

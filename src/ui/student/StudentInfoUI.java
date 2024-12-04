@@ -20,6 +20,9 @@ public class StudentInfoUI {
             String userPassword = userDetails[3];
             ScreenUtils.printDivider();
 
+
+
+
             ScreenUtils.printMessage("Student ID: " + userId, ScreenUtils.BLUE, true);
             ScreenUtils.printMessage("Student Name: " + userName, ScreenUtils.BLUE, true);
             ScreenUtils.printMessage("Student Password: " + userPassword, ScreenUtils.BLUE, true);

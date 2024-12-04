@@ -4,7 +4,6 @@ import utils.ScreenUtils;
 import network.ClientConnection;
 import java.util.Scanner;
 import utils.Session;
-import models.User;
 
 public class Main {
     public static void main(String[] args) {
