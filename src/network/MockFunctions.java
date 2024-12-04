@@ -292,13 +292,17 @@ public class MockFunctions {
         }
 
         // Build the response string
-        StringBuilder response = new StringBuilder("VIEWTIMETABLE|true");
+        StringBuilder response = new StringBuilder("VIEWTIMETABLE|true|");
 
         // Append each day's timetable to the response
         response.append(String.join("|", MOCK_TIMETABLE_MONDAY.get(userId)));
+        response.append(new String("|"));
         response.append(String.join("|", MOCK_TIMETABLE_TUESDAY.get(userId)));
+        response.append(new String("|"));
         response.append(String.join("|", MOCK_TIMETABLE_WEDNESDAY.get(userId)));
+        response.append(new String("|"));
         response.append(String.join("|", MOCK_TIMETABLE_THURSDAY.get(userId)));
+        response.append(new String("|"));
         response.append(String.join("|", MOCK_TIMETABLE_FRIDAY.get(userId)));
 
         return response.toString();
