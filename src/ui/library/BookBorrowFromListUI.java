@@ -51,7 +51,7 @@ public class BookBorrowFromListUI {
                 String row = String.format("| %-5d | %-25s | %-12s |", (i + 1), bookTitle, bookAuthor);
                 ScreenUtils.printMessage(row, ScreenUtils.WHITE, false);
 
-                ScreenUtils.showLoading(1);
+                ScreenUtils.showLoading(1.0);
             }
 
             // Print the table footer

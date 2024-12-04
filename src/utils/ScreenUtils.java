@@ -115,7 +115,7 @@ public class ScreenUtils {
         }
         System.out.println();
     }
-    public static void showLoading(int duration) {
+    public static void showLoading(Double duration) {
 
         for (int i = 0; i < duration; i++) {
             try {
