@@ -87,6 +87,6 @@ public class BookBorrowFromListUI {
             ScreenUtils.printMessage("Failed to fetch books. Please try again later.", ScreenUtils.RED, true);
         }
 
-
+    ScreenUtils.promptEnterKey();
     }
 }

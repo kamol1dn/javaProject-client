@@ -6,7 +6,7 @@ import static network.MockFunctions.*;
 
 public class ClientConnection {
 
-    private static final String SERVER_HOST = "192.168.17.111";
+    private static final String SERVER_HOST = "192.168.17.59";
     private static final int SERVER_PORT = 8080;
 
     //... for debugging with mock server (0) or using actual server (1)

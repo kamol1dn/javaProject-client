@@ -4,7 +4,7 @@ import utils.ScreenUtils;
 
 public class PrintTable {
     protected static void printTimetable(String[][] timetable) {
-        String[] days = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
+        String[] days = {"1. Monday", "2. Tuesday", "3. Wednesday", "4. Thursday", "5. Friday", "6. Saturday"};
         int columnWidth = 25; // Fixed width for all columns
 
         System.out.print(ScreenUtils.GREEN); //color all
@@ -73,7 +73,7 @@ public class PrintTable {
     // table print when choosing
 
     protected static void printTimetableRow(String[][] timetable, int rowN) {
-        String[] days = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
+        String[] days = {"1. Monday", "2. Tuesday", "3. Wednesday", "4. Thursday", "5. Friday", "6. Saturday"};
         int columnWidth = 25; // Fixed width for all columns
 
         // ANSI escape codes for colors
@@ -112,7 +112,7 @@ public class PrintTable {
     }
 
     protected static void printTimetableSlot(String[][] timetable, int rowN, int slotN) {
-        String[] days = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
+        String[] days = {"1. Monday", "2. Tuesday", "3. Wednesday", "4. Thursday", "5. Friday", "6. Saturday"};
         int columnWidth = 25; // Fixed width for all columns
 
         // ANSI escape codes for colors

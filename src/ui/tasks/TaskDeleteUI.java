@@ -21,7 +21,7 @@ public class TaskDeleteUI {
         String response = ClientConnection.sendRequest(request);
 
         System.out.println("Server Response: " + response); // Response indicates success or failure
-
+        ScreenUtils.promptEnterKey();
 
     }
 }

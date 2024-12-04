@@ -17,7 +17,7 @@ public class TaskListUI {
         if (response.startsWith("TASKLIST|true|")) {
             String tasksData = response.substring("TASKLIST|true|".length());
 
-            if (tasksData.isEmpty()) {
+            if (tasksData.length()==1) {
                 ScreenUtils.printMessage("No tasks found for user: " + Session.getInstance().getUserId(), ScreenUtils.YELLOW, true);
             } else {
                 String[] tasks = tasksData.split(", "); // Split tasks by the delimiter
@@ -66,7 +66,7 @@ public class TaskListUI {
             ScreenUtils.printMessage("Failed to fetch tasks. Please try again later.", ScreenUtils.RED, true);
         }
 
-
+        ScreenUtils.promptEnterKey();
     }
 
     private static void handleTaskSelection(String[] tasks) {

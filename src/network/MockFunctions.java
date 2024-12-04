@@ -234,7 +234,7 @@ public class MockFunctions {
         }
 
         String userId = parts[1];
-        StringBuilder response = new StringBuilder("TASKLIST|true|");
+        StringBuilder response = new StringBuilder("TASKLIST|true| ");
         for (String[] task : MOCK_TASKLIST) {
             if (task[0].equals(userId)) {
                 response.append(task[1]).append(" (").append(task[2]).append("), ");

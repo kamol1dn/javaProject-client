@@ -55,7 +55,7 @@ public class InputUtils {
             if (input.matches("\\d{2}\\:\\d{2}")) {
                 return input;
             } else {
-                System.out.println("Invalid time format. Please use 'dd.mm.yyyy'.");
+                System.out.println("Invalid time format. Please use 'hh:mm '.");
             }
         }
     }
@@ -68,7 +68,7 @@ public class InputUtils {
             if (input.matches("\\d{2}\\.\\d{2}\\.\\d{4}")) {
                 return input;
             } else {
-                System.out.println("Invalid date format. Please use 'hh:mm'.");
+                System.out.println("Invalid date format. Please use 'dd.mm.yyyy '.");
             }
         }
     }

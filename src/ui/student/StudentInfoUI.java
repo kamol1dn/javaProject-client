@@ -7,7 +7,7 @@ import models.User;
 public class StudentInfoUI {
     public static void show() {
         ScreenUtils.clearScreen();
-        ScreenUtils.printHeader("Student Information");
+        ScreenUtils.printHeader("Student Information", ScreenUtils.BLUE);
 
         String request = "STUDENTDETAIL|"+ User.getInstance().getUserId(); // Command to fetch student information
         String response = ClientConnection.sendRequest(request);
@@ -20,19 +20,10 @@ public class StudentInfoUI {
             String userPassword = userDetails[3];
             ScreenUtils.printDivider();
 
-
-
-
             ScreenUtils.printMessage("Student ID: " + userId, ScreenUtils.BLUE, true);
             ScreenUtils.printMessage("Student Name: " + userName, ScreenUtils.BLUE, true);
             ScreenUtils.printMessage("Student Password: " + userPassword, ScreenUtils.BLUE, true);
-
-
         }
-
-
-
-        System.out.println("test response from server: " + response); //test response
         ScreenUtils.promptEnterKey(); // Wait for the user to press Enter
     }
 }
