@@ -20,14 +20,13 @@ public class PrintTable {
             row[0] = days[day];
             for (int slot = 0; slot < 4; slot++) {
                 String slotData = timetable[day][slot];
-                if (slotData != null) {
+                if (!slotData.equals(" ")) {
                     String[] slotParts = slotData.split(";");
                     String subject = truncate(slotParts[0], columnWidth - 8);
                     String time = slotParts[1];
                     row[slot + 1] =  String.format("%-" + (columnWidth - 8) + "s %5s", subject, time);
 
-                } else {
-
+                } else  {
                     row[slot + 1] =  String.format("%-" + (columnWidth - 8) + "s %5s", "N/A", "00:00");
                 }
             }
