@@ -10,7 +10,7 @@ public class ClientConnection {
     private static final int SERVER_PORT = 8080;
 
     //... for debugging with mock server (0) or using actual server (1)
-    private static final int testVar = 1;
+    private static final int testVar = 0;
 
     public static String sendRequest(String request) {
         if (testVar == 0) {
