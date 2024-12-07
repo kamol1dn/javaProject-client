@@ -9,7 +9,7 @@ public class InputUtils {
     public static String getNonEmptyString(String prompt) {
         String input;
         do {
-            System.out.print(prompt);
+            System.out.print(prompt+ ": ");
             input = scanner.nextLine().trim();
             if (input.isEmpty()) {
                 System.out.println("Input cannot be empty. Please try again.");
@@ -23,7 +23,7 @@ public class InputUtils {
         int input;
         while (true) {
             try {
-                System.out.print(prompt);
+                System.out.print(prompt+ ": ");
                 input = Integer.parseInt(scanner.nextLine().trim());
                 if (input >= min && input <= max) {
                     return input;
@@ -50,7 +50,7 @@ public class InputUtils {
     public static String getTime(String prompt) {
         String input;
         while (true) {
-            System.out.print(prompt);
+            System.out.print(prompt+ ": ");
             input = scanner.nextLine().trim();
             if (input.matches("\\d{2}\\:\\d{2}")) {
                 return input;
@@ -63,7 +63,7 @@ public class InputUtils {
     public static String getDate(String prompt) {
         String input;
         while (true) {
-            System.out.print(prompt);
+            System.out.print(prompt+ ": ");
             input = scanner.nextLine().trim();
             if (input.matches("\\d{2}\\.\\d{2}\\.\\d{4}")) {
                 return input;
