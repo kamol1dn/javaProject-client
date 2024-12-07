@@ -12,12 +12,15 @@ public class Main {
         ScreenUtils.printHeader("StudyLink", ScreenUtils.CYAN);
 
         Scanner scanner = new Scanner(System.in);
+
+        // login status if true it redirectes to main menu
         boolean loggedIn = false;
 
         // Loop for Login or Register
         while (!loggedIn) {
             ScreenUtils.clearScreen();
 
+            //client project has 2 modes: test for debugging and connection to actual server
             String statusMessage;
             if (Session.getInstance().getStatus()==0){
                 statusMessage = "Test mode is on, you wont connect to server";
@@ -37,6 +40,7 @@ public class Main {
                 ScreenUtils.printMessage("Server IP adress: "+ Session.getInstance().getIpAddress(), ScreenUtils.BLUE, false);
             }
             System.out.print(ScreenUtils.PURPLE + "Choose an option: " + ScreenUtils.RESET);
+
             int choice= InputUtils.getIntInRange("", 1, 4);
 
 
@@ -58,6 +62,7 @@ public class Main {
                 }
 
                 case 4 -> {
+                    // switching between modes
                     ScreenUtils.clearScreen();
                     handleModeSwitch(scanner);
                 }
@@ -79,6 +84,7 @@ public class Main {
     }
 
 
+    // handling login, if successfull, user id will be stored in session and user objects for further use
     private static boolean handleLogin(Scanner scanner) {
         ScreenUtils.printHeader("Login", ScreenUtils.GREEN);
 

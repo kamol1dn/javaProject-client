@@ -18,7 +18,7 @@ public class Session {
         }
         return instance;
     }
-
+// getters and setters
     public String getUserId() {
         return userId;
     }
