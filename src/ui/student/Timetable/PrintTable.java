@@ -20,7 +20,7 @@ public class PrintTable {
             row[0] = days[day];
             for (int slot = 0; slot < 4; slot++) {
                 String slotData = timetable[day][slot];
-                if ( slotData!=null &&  !slotData.equals(" ")) {
+                if (!slotData.equals(" ")) {
                     String[] slotParts = slotData.split(";");
                     String subject = truncate(slotParts[0], columnWidth - 8);
                     String time = slotParts[1];
@@ -93,7 +93,7 @@ public class PrintTable {
             row[0] = days[day];
             for (int slot = 0; slot < 4; slot++) {
                 String slotData = timetable[day][slot];
-                if (slotData!=null &&  !slotData.equals(" ")) {
+                if (!slotData.equals(" ")) {
                     String[] slotParts = slotData.split(";");
                     String subject = truncate(slotParts[0], columnWidth - 8);
                     String time = slotParts[1];
@@ -133,7 +133,7 @@ public class PrintTable {
             for (int slot = 0; slot < 4; slot++) {
                 String slotData = timetable[day][slot];
                 String color = (day == rowN && slot == slotN) ? RED : GREEN; // Red for selected slot
-                if (slotData!=null &&  !slotData.equals(" ")) {
+                if (!slotData.equals(" ")) {
                     String[] slotParts = slotData.split(";");
                     String subject = truncate(slotParts[0], columnWidth - 8);
                     String time = slotParts[1];

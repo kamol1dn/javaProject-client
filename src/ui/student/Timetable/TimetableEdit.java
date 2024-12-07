@@ -70,10 +70,10 @@ public class TimetableEdit {
                 String editResponse = ClientConnection.sendRequest(editRequest);
 
                 if (editResponse.equals("TIMETABLEEDIT|true")) {
-                    System.out.println("Timetable updated successfully.");
+                    ScreenUtils.printMessage("Timetable updated successfully.", ScreenUtils.GREEN, true);
                     break; // Reload the timetable
                 } else {
-                    System.out.println("Failed to update timetable. Please try again.");
+                    ScreenUtils.printMessage("Failed to update timetable. Please try again.", ScreenUtils.RED, true);
                 }
             } else {
                 System.out.println("Invalid choice. Please select a number between 0-4.");

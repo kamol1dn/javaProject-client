@@ -17,14 +17,27 @@ public class Main {
         // Loop for Login or Register
         while (!loggedIn) {
             ScreenUtils.clearScreen();
+
+            String statusMessage;
+            if (Session.getInstance().getStatus()==0){
+                statusMessage = "Test mode is on, you wont connect to server";
+            } else {
+                statusMessage = "Test mode is off, you will be connected to server, IP address: " + Session.getInstance().getIpAddress();
+            }
+
+
             ScreenUtils.printHeader("StudyLink", ScreenUtils.CYAN);
             ScreenUtils.printMessage("Main Menu:", ScreenUtils.YELLOW, true);
             ScreenUtils.printMessage("1. Login", ScreenUtils.GREEN, false);
             ScreenUtils.printMessage("2. Register", ScreenUtils.BLUE, false);
             ScreenUtils.printMessage("3. Exit", ScreenUtils.RED, false);
-
+            ScreenUtils.printMessage("4. Switch to debug or main mode", ScreenUtils.BLUE, true);
+            ScreenUtils.printMessage("Current Mode: "+ statusMessage, ScreenUtils.BLUE, false);
+            if (Session.getInstance().getStatus()==1){
+                ScreenUtils.printMessage("Server IP adress: "+ Session.getInstance().getIpAddress(), ScreenUtils.BLUE, false);
+            }
             System.out.print(ScreenUtils.PURPLE + "Choose an option: " + ScreenUtils.RESET);
-            int choice= InputUtils.getIntInRange("", 1, 3);
+            int choice= InputUtils.getIntInRange("", 1, 4);
 
 
             switch (choice) {
@@ -38,10 +51,18 @@ public class Main {
                     ScreenUtils.clearScreen();
                     handleRegister(scanner);
                 }
+
                 case 3 -> {
                     ScreenUtils.printMessage("Thank you for using the app! Goodbye!", ScreenUtils.CYAN, true);
                     System.exit(0);
                 }
+
+                case 4 -> {
+                    ScreenUtils.clearScreen();
+                    handleModeSwitch(scanner);
+                }
+
+
                 default -> ScreenUtils.printMessage("Invalid option. Please try again.", ScreenUtils.RED, false);
             }
         }
@@ -113,5 +134,37 @@ public class Main {
             ScreenUtils.printMessage("\nRegistration failed. The user ID may already exist.", ScreenUtils.RED, false);
             ScreenUtils.showLoading("\nGoing back..", 4);
         }
+    }
+
+    private static void handleModeSwitch(Scanner scanner) {
+        ScreenUtils.printHeader("Mode", ScreenUtils.BLUE);
+
+        ScreenUtils.printMessage("Current ip adress: " + Session.getInstance().getIpAddress(), ScreenUtils.CYAN, true);
+
+        ScreenUtils.printMessage("\n\n1. Switch to main mode", ScreenUtils.RED, false);
+        ScreenUtils.printMessage("2. Switch to test mode", ScreenUtils.RED, false);
+        int mode = InputUtils.getIntInRange("Select mode", 1, 2);
+
+        if (mode == 1) {
+            Session.getInstance().setStatus(1);
+            ScreenUtils.printMessage("\nMain mode selected", ScreenUtils.BLUE, true);
+
+
+            ScreenUtils.showLoading("Trying to establish connection...", 5);
+            String response = ClientConnection.sendRequest("PING|true");
+
+            if (response.startsWith("PING|true")) {
+                ScreenUtils.printMessage("Connection is successful, now you can log in", ScreenUtils.GREEN, true);
+
+                ScreenUtils.showLoading("Going back..", 3);
+            }
+
+
+        } else {
+            Session.getInstance().setStatus(0);
+            ScreenUtils.printMessage("\nTest mode selected", ScreenUtils.BLUE, true);
+            ScreenUtils.showLoading("Going back..", 3);
+        }
+
     }
 }
