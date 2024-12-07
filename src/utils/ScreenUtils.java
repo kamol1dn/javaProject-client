@@ -69,12 +69,7 @@ public class ScreenUtils {
     }
 
 
-    public static void drawLine(int length, char character, String color) {
-        for (int i = 0; i < length; i++) {
-            System.out.print(color + character + RESET);
-        }
-        System.out.println();
-    }
+
 
 
 
@@ -92,16 +87,7 @@ public class ScreenUtils {
         System.out.println(RESET);
     }
 
-    public static void printCentered(String text, int width) {
-        int padding = (width - text.length()) / 2;
-        for (int i = 0; i < padding; i++) {
-            System.out.print(" ");
-        }
-        System.out.print(text);
-        for (int i = 0; i < padding; i++) {
-            System.out.print(" ");
-        }
-    }
+
 
     public static void showLoading(String message, int duration) {
         System.out.print(message);

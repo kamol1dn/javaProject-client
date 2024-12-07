@@ -14,12 +14,12 @@ public class LibraryMenu {
 
             printMessage("1. View Book List", ScreenUtils.CYAN, false);
             printMessage("2. Borrow a Book", ScreenUtils.GREEN, false);
-
             printMessage("3. Add a Book (for admins only)",ScreenUtils.RED, false );
+
             printMessage("0. Go Back");
             ScreenUtils.printDivider();
 
-            int choice = InputUtils.getIntInRange("Enter your choice: ", 0, 4);
+            int choice = InputUtils.getIntInRange("Enter your choice", 0, 4);
 
             switch (choice) {
                 case 1 -> UserBookListUI.show();

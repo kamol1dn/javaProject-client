@@ -6,6 +6,8 @@ import static network.MockData.*;
 public class MockFunctions {
 
 
+    /// // this part handles server simulation (for debugging)
+
     // ========================== Handlers for Commands ==========================
 
     protected static String handleLogin(String[] parts) {
@@ -25,7 +27,7 @@ public class MockFunctions {
         }
     }
 
-     static String handleRegister(String[] parts) {
+    protected static String handleRegister(String[] parts) {
         if (parts.length != 4) {
             return "REGISTER|false"; // Invalid format
         }
@@ -366,7 +368,8 @@ public class MockFunctions {
         MOCK_TIMETABLE_MONDAY.put(userId, timetable);
         return "TIMETABLEEDIT|true";
     }
-   private static String handleTimetableEditTuesday(String[] parts) {
+
+    private static String handleTimetableEditTuesday(String[] parts) {
         String userId = parts[2];
         int day = Integer.parseInt(parts[3]);
         String slot = parts[4];
@@ -410,6 +413,7 @@ public class MockFunctions {
         MOCK_TIMETABLE_WEDNESDAY.put(userId, timetable);
         return "TIMETABLEEDIT|true";
     }
+
     private static String handleTimetableEditThursday(String[] parts) {
         String userId = parts[2];
         int day = Integer.parseInt(parts[3]);

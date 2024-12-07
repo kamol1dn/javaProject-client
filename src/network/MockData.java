@@ -7,7 +7,7 @@ import java.util.Map;
 
 public class MockData {
 
-    // Mock tables
+    // Mock tables (simulations for debugging)
     protected static final Map<String, String[]> MOCK_USER_DB = new HashMap<>(); // user_id -> {password, name}
     protected static final List<String[]> MOCK_BOOKLIST = new ArrayList<>(); // {title, author}
     protected static final List<String[]> MOCK_BOOK_USER = new ArrayList<>(); // {user_id, book_name}
@@ -25,7 +25,7 @@ public class MockData {
 
 
     static {
-        // Pre-fill the mock database with sample data
+        // Prefill the mock database with sample data
 
         // Users
         MOCK_USER_DB.put("U1", new String[]{"123", "John Doe"});
@@ -46,8 +46,6 @@ public class MockData {
         MOCK_TASKLIST.add(new String[]{"student1", "Prepare for Exam", "22.23.2311"});
         MOCK_TASKLIST.add(new String[]{"student2", "Finish Project", "22.23.2311"});
 
-        // Timetable
-        MOCK_TIMETABLE.put("U1", new String[]{"Math;9:00", "Physics;12:00", "Chemistry;13:00", "Biology;16:00"});
 
         //timetabe with days
         MOCK_TIMETABLE_MONDAY.put("U1", new String[]{"Math;9:00", "Physics;12:00", "Chemistry;13:00", "Biology;16:00"});

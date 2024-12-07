@@ -7,6 +7,7 @@ import static network.MockFunctions.*;
 
 public class ClientConnection {
 
+    //ip adress and status are stored in session class
     private static final String SERVER_HOST = Session.getInstance().getIpAddress();
     private static final int SERVER_PORT = 8080;
 
@@ -24,7 +25,7 @@ public class ClientConnection {
 
 
 
-
+    //this will redirect to server
     public static String handleServerRequest(String request) {
         try (Socket socket = new Socket(SERVER_HOST, SERVER_PORT);
              PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
@@ -38,10 +39,13 @@ public class ClientConnection {
         }
     }
 
+    //this will simulate the server // for debugging and rnning offline
     public static String handleMockRequest(String request) {
 
         String[] parts = request.split("\\|");
         String command = parts[0]; // First part is the command
+
+        //this protocol commands are used to do actions
 
         switch (command) {
             case "LOGIN" -> {

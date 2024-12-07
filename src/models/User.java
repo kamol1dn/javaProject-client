@@ -1,6 +1,6 @@
 package models;
 
-
+//user details will be saved there once logged in
 
 public class User {
     private String userId;

@@ -7,7 +7,7 @@ import models.User;
 
 public class BookBorrowFromListUI {
     public static void show() {
-        ScreenUtils.clearScreen();
+        ScreenUtils.clearScreen();  //new window
         ScreenUtils.printHeader("Borrow a Book", ScreenUtils.CYAN);
 
         // Send request to fetch the list of all books
@@ -51,7 +51,11 @@ public class BookBorrowFromListUI {
                 String row = String.format("| %-5d | %-25s | %-12s |", (i + 1), bookTitle, bookAuthor);
                 ScreenUtils.printMessage(row, ScreenUtils.WHITE, false);
 
-                ScreenUtils.showLoading(1.0);
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                }
             }
 
             // Print the table footer
@@ -65,6 +69,7 @@ public class BookBorrowFromListUI {
 
             } else if (choice > 0 && choice <= books.length) {
 
+                // below chooses the book and gets the name
                 String[] selectedBook = books[choice - 1].split(",");
                 String bookName = selectedBook[0];
 
